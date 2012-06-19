@@ -1,0 +1,21 @@
+# Make virtualenvwrapper work
+export WORKON_HOME=~/venvs
+mkdir -p $WORKON_HOME
+source /usr/local/bin/virtualenvwrapper.sh
+
+# Deal with platform-specific stuff.
+subfile=`pwd`/`uname`/bashrc
+echo $subfile
+if [[ -e "$subfile" ]]
+then
+  echo "Loading OS-specific settings..."
+  source $subfile
+fi
+
+# Deal with computer-specific stuff.
+if [[ -e ~/.bash_specific ]]
+then
+  echo "Loading computer-specific settings..."
+  source ~/.bash_specific
+fi
+

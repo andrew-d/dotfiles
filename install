@@ -1,0 +1,74 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+from os import listdir, readlink, rename, symlink, unlink
+from os.path import basename, dirname, exists, expanduser, isdir, islink, join, realpath, split
+
+
+HOME_DIR = expanduser('~')
+
+
+def backup_file(path):
+    # Find a filename that doesn't exist.
+    fdir, fname = split(path)
+
+    while exists(join(fdir, fname)):
+        fname += "~"
+
+    # Copy to the new name.
+    new_path = join(fdir, fname)
+    try:
+        rename(path, new_path)
+        return new_path
+    except OSError:
+        print "[ERROR ] Error while trying to backup: {0}".format(path)
+        return None
+
+
+def check_dotfile(file_path, repo_dir):
+    dest_name = "." + basename(file_path)
+    dest_path = join(HOME_DIR, dest_name)
+
+    # Check if the dotfile has been linked already.
+    if exists(dest_path):
+        if islink(dest_path):
+            if readlink(dest_path).startswith(repo_dir):
+                # Up-to-date, so do nothing.
+                print "[STATUS] {0} is up-to-date!".format(dest_name)
+                return True
+            else:
+                # Exists, not up-to-date.
+                print "[STATUS] {0} is out-of-date (links to: {1})".format(
+                    dest_name, readlink(dest_path))
+
+        # Backup the file.
+        new_file = backup_file(dest_path)
+        if new_file is None:
+            print "[ERROR ] Could not back up - not overwriting"
+            return False
+        else:
+            print "[BACKUP] {0} --> {1}".format(dest_path, new_file)
+
+    # Either doesn't exist, or existed and we removed it.
+    try:
+        symlink(file_path, dest_path)
+        print "[MKLINK] {0} --> {1}".format(file_path, dest_path)
+    except OSError:
+        return False
+
+
+def main():
+    # Get dotfiles directory
+    current_dir = dirname(realpath(__file__))
+    dotfiles_dir = join(current_dir, "dotfiles")
+
+    # Install the global dotfiles.
+    for f in listdir(dotfiles_dir):
+        fpath = join(dotfiles_dir, f)
+
+        if not isdir(fpath):
+            check_dotfile(fpath, current_dir)
+
+
+if __name__ == '__main__':
+    main()
