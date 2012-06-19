@@ -1,15 +1,29 @@
 # Make virtualenvwrapper work
-export WORKON_HOME=~/venvs
-mkdir -p $WORKON_HOME
-source /usr/local/bin/virtualenvwrapper.sh
+if [[ -e /usr/local/bin/virtualenvwrapper.sh ]]
+then
+  export WORKON_HOME=~/venvs
+  mkdir -p $WORKON_HOME
+  source /usr/local/bin/virtualenvwrapper.sh
+fi
 
 # Deal with platform-specific stuff.
-subfile=`pwd`/`uname`/bashrc
-echo $subfile
-if [[ -e "$subfile" ]]
+
+# From: http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
+SOURCE="${BASH_SOURCE[0]}"
+DIR="$( dirname "$SOURCE" )"
+while [ -h "$SOURCE" ]
+do
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+  DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd )"
+done
+DOTFILES_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+SUBFILE=$DOTFILES_DIR/`uname`/bashrc
+if [[ -e "$SUBFILE" ]]
 then
   echo "Loading OS-specific settings..."
-  source $subfile
+  source $SUBFILE
 fi
 
 # Deal with computer-specific stuff.
@@ -19,3 +33,7 @@ then
   source ~/.bash_specific
 fi
 
+# Unset all unneeded variables.
+unset SOURCE
+unset DIR
+unset SUBFILE
