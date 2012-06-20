@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+from subprocess import call
+
+
+email = raw_input("Enter your GitHub email: ")
+token = raw_input("Enter your GitHub token (blank for optional): ")
+
+call(['git', 'config', '--global', 'user.email', email])
+
+if token != "":
+    call(['git', 'config', '--global', 'github.token', token])
