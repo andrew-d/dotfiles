@@ -28,6 +28,11 @@ fi
 # Git auto-completion
 source ~/.git-completion.bash
 
+# Helper functions.
+if [[ -e ~/.functions ]]; then
+  source ~/.functions
+fi
+
 # Sexy sexy prompt - stolen from:
 # https://github.com/mathiasbynens/dotfiles/blob/master/.bash_prompt
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
