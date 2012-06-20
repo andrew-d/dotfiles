@@ -1,13 +1,19 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-from subprocess import call
+from subprocess import call, check_output
 
 
-email = raw_input("Enter your GitHub email: ")
-token = raw_input("Enter your GitHub token (blank for optional): ")
+# If no email, prompt to add.
+existing_email = check_output(['git', 'config', '--global', '--get', 'user.email'])
+if existing_email.rstrip() == "":
+    email = raw_input("Enter your GitHub email: ")
+    call(['git', 'config', '--global', 'user.email', email])
 
-call(['git', 'config', '--global', 'user.email', email])
+# If no token, prompt to add.
+existing_token = check_output(['git', 'config', '--global', '--get', 'github.token'])
+if existing_token.rstrip() == "":
+    token = raw_input("Enter your GitHub token (blank for optional): ")
 
-if token != "":
-    call(['git', 'config', '--global', 'github.token', token])
+    if token != "":
+        call(['git', 'config', '--global', 'github.token', token])

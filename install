@@ -4,8 +4,8 @@
 import errno
 from shutil import copytree, move, rmtree
 from datetime import datetime
-from os import *
 from os.path import *
+from os import *    # Note: os must come after, so walk() is from here.
 from subprocess import call
 
 
@@ -73,6 +73,55 @@ def install_dotfile(file_path):
         return False
 
 
+def copy_missing(src, dest):
+    # This function is our helper - it gets passed individual prefixes
+    # instead of absolute paths.
+    def copy_dir(src, dest, prefix):
+        # Current location.
+        src_path = join(src, prefix)
+        dst_path = join(dest, prefix)
+
+        # Find all files in the source directory.
+        for root, dirs, files in walk(src_path):
+            # Check all files.
+            for f in files:
+                # Make names.
+                src_file = join(src_path, f)
+                dst_file = join(dst_path, f)
+
+                # Is it newer?
+                src_mtime = lstat(src_file).st_mtime
+
+                try:
+                    dst_mtime = lstat(dst_file).st_mtime
+                except OSError as ex:
+                    if ex.errno == errno.ENOENT:
+                        dst_mtime = 0
+                    else:
+                        raise
+
+                if src_mtime > dst_mtime:
+                    # Copy it.
+                    print "[COPY  ] {0} --> {1}".format(src_file, dst_file)
+                else:
+                    # Don't copy it.
+                    print "[NOCOPY] {0} --> {1} (destination is newer)".format(src_file, dst_file)
+
+            # Ensure all directories are there, then recurse.
+            for d in dirs:
+                dst_dir = join(dst_path, d)
+                if exist(dst_dir):
+                    if not isdir(dst_dir):
+                        print "[ERROR ] {0} is not a directory!".format(dst_dir)
+                        continue
+                else:
+                    mkdir(dst_dir)
+
+                copy_dir(src, dest, join(prefix, d))
+
+    return copy_dir(src, dest, "")
+
+
 def main():
     # Make backup directory.
     mkdir_p(BACKUP_DIR)
@@ -98,12 +147,14 @@ def main():
 
     # Copy all files from copy/ to local/
     local_dir = join(REPO_DIR, "local")
-    if exists(local_dir) and isdir(local_dir):
-        print "[BACKUP] {0} --> {1}".format(local_dir, BACKUP_DIR)
-        move(local_dir, BACKUP_DIR)
+    copy_missing(copy_dir, local_dir)
 
-    print "[COPY  ] {0} --> {1}".format(copy_dir, local_dir)
-    copytree(copy_dir, local_dir)
+    # if exists(local_dir) and isdir(local_dir):
+    #     print "[BACKUP] {0} --> {1}".format(local_dir, BACKUP_DIR)
+    #     move(local_dir, BACKUP_DIR)
+
+    # print "[COPY  ] {0} --> {1}".format(copy_dir, local_dir)
+    # copytree(copy_dir, local_dir)
 
     # Now, symlink everything in.
     for f in listdir(local_dir):
