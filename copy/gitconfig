@@ -1,0 +1,16 @@
+[github]
+	user = andrew-d
+[user]
+	name = Andrew Dunham
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = auto
+[push]
+	default = tracking
+[alias]
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	stat = status -sb
+	head = log -n1
+	fix = commit --amend -C HEAD

@@ -1,2 +1,16 @@
+# Ignore specific directories
+# ===========================
+
+# This is used for local copies of files with sensitive information.
+local/
+
+# This is used to backup old copies of dotfiles
+backups/*.*
+
+# This is for test stuff.
+test/
+
+# Ignore certain filetypes
+# ========================
 *.swp
 
