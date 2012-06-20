@@ -6,6 +6,28 @@ then
   source /usr/local/bin/virtualenvwrapper.sh
 fi
 
+# IP addresses
+alias wanip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias whois="whois -h whois-servers.net"
+
+# File size
+alias fs="stat -f '%z bytes'"
+alias df="df -h"
+
+# Check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# Color for grep.
+export GREP_OPTIONS='--color=auto'
+
+# SSH auto-completion based on entries in known_hosts.
+if [[ -e ~/.ssh/known_hosts ]]; then
+  complete -o default -W "$(cat ~/.ssh/known_hosts | sed 's/[, ].*//' | sort | uniq | grep -v '[0-9]')" ssh scp stfp
+fi
+
+
+# ==================================================
 # Deal with platform-specific stuff.
 
 # From: http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
