@@ -1,6 +1,5 @@
 # Make virtualenvwrapper work
-if [[ -e /usr/local/bin/virtualenvwrapper.sh ]]
-then
+if [[ -e /usr/local/bin/virtualenvwrapper.sh ]]; then
   export WORKON_HOME=~/venvs
   mkdir -p $WORKON_HOME
   source /usr/local/bin/virtualenvwrapper.sh
@@ -24,6 +23,11 @@ export GREP_OPTIONS='--color=auto'
 # SSH auto-completion based on entries in known_hosts.
 if [[ -e ~/.ssh/known_hosts ]]; then
   complete -o default -W "$(cat ~/.ssh/known_hosts | sed 's/[, ].*//' | sort | uniq | grep -v '[0-9]')" ssh scp stfp
+fi
+
+# Git auto-completion
+if [[ -e ~/.git-completion.bash ]]; then
+  source ~/.git-completion.bash
 fi
 
 
