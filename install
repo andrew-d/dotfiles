@@ -106,8 +106,8 @@ def main():
     copytree(copy_dir, local_dir)
 
     # Now, symlink everything in.
-    for f in listdir(copy_dir):
-        fpath = join(copy_dir, f)
+    for f in listdir(local_dir):
+        fpath = join(local_dir, f)
 
         if not isdir(fpath):
             install_dotfile(fpath)
