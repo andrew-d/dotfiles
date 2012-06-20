@@ -5,7 +5,7 @@
 local/
 
 # This is used to backup old copies of dotfiles
-backups/*.*
+backups/
 
 # This is for test stuff.
 test/

@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 import errno
-from shutil import copytree
+from shutil import copytree, move, rmtree
 from datetime import datetime
 from os import *
 from os.path import *
@@ -36,8 +36,8 @@ def move_and_backup_file(path):
     try:
         rename(path, new_path)
         return new_path
-    except OSError:
-        print "[ERROR ] Error while trying to backup: {0}".format(path)
+    except OSError as ex:
+        print "[ERROR ] Error {0} while trying to backup: {1} --> {2}".format(ex.errno, path, new_path)
         return None
 
 
@@ -74,6 +74,9 @@ def install_dotfile(file_path):
 
 
 def main():
+    # Make backup directory.
+    mkdir_p(BACKUP_DIR)
+
     # Exec everything in pre_install.
     pre_dir = join(REPO_DIR, "pre_install")
     for f in listdir(pre_dir):
@@ -95,8 +98,10 @@ def main():
 
     # Copy all files from copy/ to local/
     local_dir = join(REPO_DIR, "local")
-    print "[MKDIR ] {0}".format(local_dir)
-    mkdir_p(local_dir)
+    if exists(local_dir) and isdir(local_dir):
+        print "[BACKUP] {0} --> {1}".format(local_dir, BACKUP_DIR)
+        move(local_dir, BACKUP_DIR)
+
     print "[COPY  ] {0} --> {1}".format(copy_dir, local_dir)
     copytree(copy_dir, local_dir)
 
