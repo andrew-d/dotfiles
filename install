@@ -1,22 +1,38 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-from os import listdir, readlink, rename, symlink, unlink
-from os.path import basename, dirname, exists, expanduser, isdir, islink, join, realpath, split
+import errno
+from shutil import copytree
+from datetime import datetime
+from os import *
+from os.path import *
+from subprocess import call
 
 
+START_TIME = datetime.now()
 HOME_DIR = expanduser('~')
+REPO_DIR = dirname(realpath(__file__))
+BACKUP_DIR = join(REPO_DIR, "backups", START_TIME.strftime("%Y_%m_%d-%H_%M_%S"))
 
 
-def backup_file(path):
-    # Find a filename that doesn't exist.
-    fdir, fname = split(path)
+def mkdir_p(path):
+    try:
+        makedirs(path)
+    except OSError as ex:
+        if ex.errno == errno.EEXIST:
+            pass
+        else:
+            raise
 
-    while exists(join(fdir, fname)):
-        fname += "~"
 
-    # Copy to the new name.
-    new_path = join(fdir, fname)
+def run(cmd):
+    call(cmd, shell=True)
+
+
+def move_and_backup_file(path):
+    # Move to backups directory.
+    fname = basename(path)
+    new_path = join(BACKUP_DIR, fname)
     try:
         rename(path, new_path)
         return new_path
@@ -25,14 +41,14 @@ def backup_file(path):
         return None
 
 
-def check_dotfile(file_path, repo_dir):
+def install_dotfile(file_path):
     dest_name = "." + basename(file_path)
     dest_path = join(HOME_DIR, dest_name)
 
     # Check if the dotfile has been linked already.
     if exists(dest_path):
         if islink(dest_path):
-            if readlink(dest_path).startswith(repo_dir):
+            if readlink(dest_path).startswith(REPO_DIR):
                 # Up-to-date, so do nothing.
                 print "[STATUS] {0} is up-to-date!".format(dest_name)
                 return True
@@ -42,7 +58,7 @@ def check_dotfile(file_path, repo_dir):
                     dest_name, readlink(dest_path))
 
         # Backup the file.
-        new_file = backup_file(dest_path)
+        new_file = move_and_backup_file(dest_path)
         if new_file is None:
             print "[ERROR ] Could not back up - not overwriting"
             return False
@@ -58,17 +74,46 @@ def check_dotfile(file_path, repo_dir):
 
 
 def main():
-    # Get dotfiles directory
-    current_dir = dirname(realpath(__file__))
-    dotfiles_dir = join(current_dir, "dotfiles")
+    # Exec everything in pre_install.
+    pre_dir = join(REPO_DIR, "pre_install")
+    for f in listdir(pre_dir):
+        curr = join(pre_dir, f)
+        if access(curr, X_OK):
+            print "[PREXEC] {0}".format(curr)
+            run(curr)
 
-    # Install the global dotfiles.
-    for f in listdir(dotfiles_dir):
-        fpath = join(dotfiles_dir, f)
+    # Get directories.
+    link_dir = join(REPO_DIR, "link")
+    copy_dir = join(REPO_DIR, "copy")
+
+    # Link in all dotfiles from link/.
+    for f in listdir(link_dir):
+        fpath = join(link_dir, f)
 
         if not isdir(fpath):
-            check_dotfile(fpath, current_dir)
+            install_dotfile(fpath)
 
+    # Copy all files from copy/ to local/
+    local_dir = join(REPO_DIR, "local")
+    print "[MKDIR ] {0}".format(local_dir)
+    mkdir_p(local_dir)
+    print "[COPY  ] {0} --> {1}".format(copy_dir, local_dir)
+    copytree(copy_dir, local_dir)
+
+    # Now, symlink everything in.
+    for f in listdir(copy_dir):
+        fpath = join(copy_dir, f)
+
+        if not isdir(fpath):
+            install_dotfile(fpath)
+
+    # Exec everything in post_install.
+    pre_dir = join(REPO_DIR, "post_install")
+    for f in listdir(pre_dir):
+        curr = join(pre_dir, f)
+        if access(curr, X_OK):
+            print "[POEXEC] {0}".format(curr)
+            run(curr)
 
 if __name__ == '__main__':
     main()
