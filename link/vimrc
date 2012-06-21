@@ -1,11 +1,19 @@
 " Disable compatibility with vi
 set nocompatible
 
+" Set filetype stuff to on
+filetype on
+filetype plugin on
+filetype indent on
+
 " Who uses a text editor without syntax highlighting these days?
 syntax on
 
 " Disable the distracting intro screen.
 set shm=atI
+
+" Set visual bell - turns off the damn beeping.
+set vb
 
 " Don't redraw the screen during macros.
 set lazyredraw
@@ -31,7 +39,7 @@ set showmode
 set title
 
 " When the page starts to scroll, keep the cursor 3 lines from top/bottom
-set scrolloff=3      
+set scrolloff=5
 
 " Allow the cursor to go to 'invalid' locations. Note: disabled becuase it's irritating.
 " set virtualedit=all
@@ -85,6 +93,10 @@ set expandtab
 set tabstop=4
 set softtabstop=4
 
+" A long timeout for mappings, but a short timeout for keycodes (so 'Esc' is
+" quickly detected, but you can take a while to type mappings).
+set timeout timeoutlen=3000 ttimeoutlen=100
+
 " Color scheme
 colorscheme desert
 
@@ -96,6 +108,67 @@ au BufNewFile,BufRead *.json set ft=javascript
 
 " Command to sudo save file
 cmap w!! w !sudo tee % >/dev/null
+
+" MS Windows-style 'indent/dedent selection'
+vmap <Tab> >
+vmap <S-Tab> <
+
+" MS Windows-style 'next pane' and 'previous pane' (overridden for Vim 7 later)
+nmap <C-Tab> w
+nmap <CS-Tab> W
+
+" Control-L will redraw the screen - tell it to un-highlight too.
+nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
+
+" Functions go after this
+" -----------------------------------------------------------
+if v:version >= 700
+    " A single key for stepping through all open buffers.
+    function NextWindow()
+        if winnr() == winnr('$')
+            if tabpagenr() == tabpagenr('$')
+                " We're at the end of the last tab, go back to the beginning
+                tabfirst    " Go to first tab
+                1 wincmd w  " Go to first window
+            else
+                " We're at the end of this tab, go to the next tab
+                tabnext     " Go to next tab
+                1 wincmd w  " Go to first window
+            endif
+        else
+            " We're at some random window in the tab, go to the next window
+            wincmd w
+        endif
+    endfunction
+
+    function PrevWindow()
+        if winnr() == 1
+            if tabpagenr() == 1
+            " We're at the beginning of the first tab, wrap around
+                tablast
+                exe winnr('$') . "wincmd w"
+            else
+                " We're at the beginning of this tab, go to the previous
+                tabprevious
+                exe winnr('$') . "wincmd w"
+           endif
+        else
+            " We're at some random window in the tab, go to the previous window
+            wincmd W
+        endif
+    endfunction
+
+    " MS Windows-style bindings for gvim
+    nnoremap <C-Tab> :call NextWindow()<cr>
+    nnoremap <CS-Tab> :call PrevWindow()<cr>
+
+    " Vim-style bindings for terminals
+    nnoremap <C-W>w :call NextWindow()<cr>
+    nnoremap <C-W><C-W> :call NextWindow()<cr>
+    nnoremap <C-W>W :call PrevWindow()<cr>
+
+endif
+
 
 " If it exists, include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
