@@ -139,11 +139,10 @@ def main():
     copy_dir = join(REPO_DIR, "copy")
 
     # Link in all dotfiles from link/.
+    # Note: we link even directories, so our ".vim" dir works
     for f in listdir(link_dir):
         fpath = join(link_dir, f)
-
-        if not isdir(fpath):
-            install_dotfile(fpath)
+        install_dotfile(fpath)
 
     # Copy all files from copy/ to local/
     local_dir = join(REPO_DIR, "local")
