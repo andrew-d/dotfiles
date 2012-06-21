@@ -109,32 +109,23 @@ export HISTIGNORE="ls:ls *:pwd;exit:date"
 # ==================================================
 # Deal with platform-specific stuff.
 
-# From: http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
-SOURCE="${BASH_SOURCE[0]}"
-DIR="$( dirname "$SOURCE" )"
-while [ -h "$SOURCE" ]
-do
-  SOURCE="$(readlink "$SOURCE")"
-  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
-  DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd )"
-done
-DOTFILES_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-
-SUBFILE=$DOTFILES_DIR/`uname`/bashrc
-if [[ -e "$SUBFILE" ]]
-then
-  echo "Loading OS-specific settings..."
-  source $SUBFILE
+echo "Loading OS-specific settings..."
+UNAMESTR=`uname`
+if [[ "$UNAMESTR" == "Darwin" ]]; then
+    # Mac OS X-specific stuff
+    alias lock="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+    alias ls="ls -alGF"
+elif [[ "$UNAMESTR" == "Linux" ]]; then
+    alias ls="ls -al --color=auto"
 fi
 
 # Deal with computer-specific stuff.
-if [[ -e ~/.bash_specific ]]
+if [[ -e ~/.bash.local ]]
 then
   echo "Loading computer-specific settings..."
-  source ~/.bash_specific
+  source ~/.bash.local
 fi
 
 # Unset all unneeded variables.
-unset SOURCE
-unset DIR
-unset SUBFILE
+unset UNAMESTR
+
