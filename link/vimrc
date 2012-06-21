@@ -1,6 +1,10 @@
 " Disable compatibility with vi
 set nocompatible
 
+" Initialize pathogen.
+filetype off
+call pathogen#infect()
+
 " Set filetype stuff to on
 filetype on
 filetype plugin on
@@ -9,11 +13,16 @@ filetype indent on
 " Who uses a text editor without syntax highlighting these days?
 syntax on
 
+" Undo and history should have LOTS of space
+set history=1000
+set undolevels=1000
+
 " Disable the distracting intro screen.
 set shm=atI
 
-" Set visual bell - turns off the damn beeping.
-set vb
+" Set visual bell / turns off the damn beeping.
+set visualbell
+set noerrorbells
 
 " Don't redraw the screen during macros.
 set lazyredraw
@@ -117,8 +126,22 @@ vmap <S-Tab> <
 nmap <C-Tab> w
 nmap <CS-Tab> W
 
+" Easier moving in windows
+noremap <C-j> <C-W>j
+noremap <C-k> <C-W>k
+noremap <C-l> <C-W>l
+noremap <C-h> <C-W>h
+
 " Control-L will redraw the screen - tell it to un-highlight too.
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
+
+" Making it so ; works like : for commands. Saves typing and eliminates :W
+" style typos
+nnoremap ; :
+
+" Uncomment to highlight the line with the cursor.  I find this kinda
+" irritating.
+" set cursorline
 
 " Functions go after this
 " -----------------------------------------------------------
@@ -169,6 +192,19 @@ if v:version >= 700
 
 endif
 
+" Settings for the python syntax highlighter
+if has("expr")
+    let python_highlight_string_formatting = 1
+    let python_highlight_indent_errors = 1
+    let python_slow_sync = 1
+endif
+
+" Platform-dependent bits
+if has("win32")
+    set fileformats=dos,unix,mac
+elseif has("unix")
+    set fileformats=unix,dos,mac
+endif
 
 " If it exists, include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
