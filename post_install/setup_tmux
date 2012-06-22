@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+from os import uname, environ, sep
+from os.path import expanduser
+
+# If we're not on OS X, write a blank file.
+if uname()[0] != "Darwin":
+    data = "\n"
+else:
+    shell = environ['SHELL'].split(sep)[-1]
+    data = "set-option -g default-command \"reattach-to-user-namespace -l {0}\"\n".format(shell)
+
+print "[CONFIG] Writing OS-specific tmux config..."
+
+# We write a specific conifg to our os-specific tmux config.
+with open(expanduser("~/.tmux.os.conf"), "w") as conf:
+    conf.write(data)
+
