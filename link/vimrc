@@ -1,28 +1,49 @@
-" Disable compatibility with vi
-set nocompatible
+" =============================================================================
+" GENERAL SETTINGS
+" -----------------------------------------------------------------------------
 
-" Initialize pathogen.
-filetype off
-call pathogen#infect()
+set nocompatible                        " Disable compatibility with vi
+call pathogen#infect()                  " Initialize pathogen.
 
-" Set filetype stuff to on
-filetype on
-filetype plugin on
-filetype indent on
+set history=1000                        " Command history = lots
+set undolevels=1000                     " Lots and lots of undo
+filetype on                             " Filetype detection on
+filetype plugin on                      " Enable loading plugin files
+filetype indent on                      " Enable loading indent files
+syntax on                               " Syntax highlighting on
 
-" Who uses a text editor without syntax highlighting these days?
-syntax on
+set nobk nowb noswf             " Disable backup, swapfiles, etc. (we have git)
 
-" Undo and history should have LOTS of space
-set history=1000
-set undolevels=1000
 
-" Disable the distracting intro screen.
-set shm=atI
+" =============================================================================
+" PRESENTATION
+" -----------------------------------------------------------------------------
 
-" Set visual bell / turns off the damn beeping.
-set visualbell
-set noerrorbells
+set shm=atI                     " Disable the distracting intro screen
+set visualbell                  " Flash cursor instead of bell
+set noerrorbells                " No error bells
+set showmode                    " Display the current mode in the status bar
+
+set number                      " Show line numbers
+set numberwidth=5               " Linenumber width is 5
+
+
+" =============================================================================
+" STATUSLINE
+" -----------------------------------------------------------------------------
+
+set laststatus=2                " Always display a status line
+
+
+" =============================================================================
+" TAB SETTINGS
+" -----------------------------------------------------------------------------
+
+set wildmenu                    " Enable command-line tab completion
+set wildmode=longest,list,full  " Set tab-completion order
+
+set wildignore+=*.o,*.obj,*.pyc,*.DS_Store,*.db,.git,*.bak,.svn,*.swp
+
 
 " Don't redraw the screen during macros.
 set lazyredraw
@@ -33,16 +54,6 @@ set synmaxcol=2048
 " Improves redrawing for "newer" computers (where "newer" is defined as "not 
 " ancient").
 set ttyfast
-
-" Disable backup (useful since most files are version-controlled)
-set nobk nowb noswf
-
-" Show line numbers, width = 5
-set number
-set numberwidth=5
-
-" Display the current mode in the status bar
-set showmode
 
 " Show file in titlebar
 set title
@@ -65,14 +76,9 @@ set bs=2
 " Only be case sensitive when search contains uppercase letters.
 set ignorecase smartcase
 
-" Always display a status line
-set laststatus=2 
 
-" Enable command-line tab completion (REALLY useful).
-set wim=full wildmenu
 
-" Hide irrelevent matches when completing stuff.
-set wildignore+=*.o,*.obj,*.pyc,*.DS_Store,*.db,.git,*.bak,.svn,*.swp
+
 
 " Allow hidden buffers (REALLY useful as well).
 set hidden
@@ -98,16 +104,18 @@ set listchars=tab:>.
 set showmatch 
 
 " Tabs are spaces, width 4, and are treated as single chars.
+set smarttab
 set expandtab
 set tabstop=4
-set softtabstop=4
 
 " A long timeout for mappings, but a short timeout for keycodes (so 'Esc' is
 " quickly detected, but you can take a while to type mappings).
 set timeout timeoutlen=3000 ttimeoutlen=100
 
 " Color scheme
-colorscheme desert
+let g:solarized_termcolors=256
+set background=dark
+colorscheme solarized
 
 " Turn off tab-replacement for Makefiles
 autocmd FileType make setlocal noexpandtab
@@ -198,6 +206,17 @@ if has("expr")
     let python_highlight_indent_errors = 1
     let python_slow_sync = 1
 endif
+
+" TODO: Move this somewhere sane
+autocmd FileType ruby set textwidth=79
+autocmd FileType ruby set tabstop=2
+autocmd FileType ruby set shiftwidth=2
+"autocmd FileType ruby set g:detectindent_preferred_expandtab = 1
+
+" TODO: bind leader-leader to save
+" TODO: grab andy's fancy whitespace regex
+" TODO: backslsash x --> chmod +x curr file
+" TODO: autoindent - why is it off?
 
 " Platform-dependent bits
 if has("win32")
