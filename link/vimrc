@@ -143,6 +143,9 @@ noremap <C-h> <C-W>h
 " Control-L will redraw the screen - tell it to un-highlight too.
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 
+" Remap K to 'split line'
+nnoremap K i<CR><Esc>
+
 " Making it so ; works like : for commands. Saves typing and eliminates :W
 " style typos
 nnoremap ; :
