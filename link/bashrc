@@ -35,13 +35,11 @@ fi
 # Git auto-completion
 source ~/.git-completion.bash
 
-# If we can find it, we use the Vim 'less' macro.
-VLESS=$(find /usr/share/vim -name 'less.sh')
-if [ ! -z $VLESS ]; then
-  #alias less=$VLESS
-  # Commented out since this uses a funky background.
+# If it exists, use source-highlight.
+if command -v "source-highlight" >/dev/null 2>&1; then
+  export LESSOPEN="| /usr/local/bin/src-hilite-lesspipe.sh %s"
+  alias less="less -R "
 fi
-
 
 # Helper functions.
 if [[ -e ~/.functions ]]; then
