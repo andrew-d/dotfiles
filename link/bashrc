@@ -35,6 +35,14 @@ fi
 # Git auto-completion
 source ~/.git-completion.bash
 
+# If we can find it, we use the Vim 'less' macro.
+VLESS=$(find /usr/share/vim -name 'less.sh')
+if [ ! -z $VLESS ]; then
+  #alias less=$VLESS
+  # Commented out since this uses a funky background.
+fi
+
+
 # Helper functions.
 if [[ -e ~/.functions ]]; then
   source ~/.functions
