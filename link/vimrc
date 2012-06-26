@@ -150,6 +150,10 @@ nnoremap K i<CR><Esc>
 " style typos
 nnoremap ; :
 
+" Set Ctrl-P as the command to invoke the CtrlP plugin.
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
 " Uncomment to highlight the line with the cursor.  I find this kinda
 " irritating.
 " set cursorline
