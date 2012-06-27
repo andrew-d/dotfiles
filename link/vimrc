@@ -224,6 +224,8 @@ autocmd FileType ruby set shiftwidth=2
 " TODO: grab andy's fancy whitespace regex
 " TODO: backslsash x --> chmod +x curr file
 " TODO: autoindent - why is it off?
+" TODO: remap Ctrl-L to something else - currently it clears the screen and
+" also conflicts with "move window right", above
 
 " Platform-dependent bits
 if has("win32")
