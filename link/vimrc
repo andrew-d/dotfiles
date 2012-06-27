@@ -112,6 +112,13 @@ set tabstop=4
 " quickly detected, but you can take a while to type mappings).
 set timeout timeoutlen=3000 ttimeoutlen=100
 
+" This must be done before the color scheme is specified.
+highlight ExtraWhitespace ctermbg=red guibg=red
+au ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+au BufEnter * match ExtraWhitespace /\s\+$/
+au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+au InsertLeave * match ExtraWhiteSpace /\s\+$/
+
 " Color scheme
 let g:solarized_termcolors=256
 set background=dark
