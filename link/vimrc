@@ -51,7 +51,7 @@ set lazyredraw
 " Don't syntax highlight super-long lines (for performance)
 set synmaxcol=2048
 
-" Improves redrawing for "newer" computers (where "newer" is defined as "not 
+" Improves redrawing for "newer" computers (where "newer" is defined as "not
 " ancient").
 set ttyfast
 
@@ -65,7 +65,7 @@ set scrolloff=5
 " set virtualedit=all
 
 " Display current column/line in bottom right
-set ruf=%l:%c ruler 
+set ruf=%l:%c ruler
 
 " Show incomplete command at bottom right, please.
 set showcmd
@@ -101,7 +101,7 @@ set list
 set listchars=tab:>.
 
 " Show matching brackets
-set showmatch 
+set showmatch
 
 " Tabs are spaces, width 4, and are treated as single chars.
 set smarttab
@@ -147,11 +147,14 @@ noremap <C-k> <C-W>k
 noremap <C-l> <C-W>l
 noremap <C-h> <C-W>h
 
-" Control-L will redraw the screen - tell it to un-highlight too.
-nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
+" Space will unhighlight search and clear any diplayed message
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR><Space>
 
 " Remap K to 'split line'
 nnoremap K i<CR><Esc>
+
+" Easy file saving
+map <C-s> :w<CR>
 
 " Making it so ; works like : for commands. Saves typing and eliminates :W
 " style typos
@@ -228,11 +231,21 @@ autocmd FileType ruby set shiftwidth=2
 "autocmd FileType ruby set g:detectindent_preferred_expandtab = 1
 
 " TODO: bind leader-leader to save
-" TODO: grab andy's fancy whitespace regex
-" TODO: backslsash x --> chmod +x curr file
 " TODO: autoindent - why is it off?
-" TODO: remap Ctrl-L to something else - currently it clears the screen and
-" also conflicts with "move window right", above
+
+" Map <Leader>x to set the execute bit on the current file
+function! SetExecutableBit()
+    let fname = expand("%:p")
+    checktime
+    execute "au FileChangedShell " . fname . " :echo"
+    silent !chmod a+x %
+    checktime
+    execute "au! FileChangedShell " . fname
+    redraw!
+    echo "chmod +x " . fname
+endfunction
+command! Chmodx call SetExecutableBit()
+map <Leader>x :Chmodx<cr>
 
 " Platform-dependent bits
 if has("win32")
