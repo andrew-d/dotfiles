@@ -28,3 +28,4 @@ except IOError:
 
 atexit.register(readline.write_history_file, histfile)
 del os, histfile
+
