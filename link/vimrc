@@ -247,6 +247,9 @@ endfunction
 command! Chmodx call SetExecutableBit()
 map <Leader>x :Chmodx<cr>
 
+" On save, make file executable if has shebang line with '/bin/' or '/usr/bin/'
+autocmd BufWritePost * if getline(1) =~ "^#!/bin/" | :call SetExecutableBit() | elseif getline(1) =~ "^#!/usr/bin/" | :call SetExecutableBit() | endif
+
 " Platform-dependent bits
 if has("win32")
     set fileformats=dos,unix,mac
