@@ -160,6 +160,10 @@ map <C-s> :w<CR>
 " style typos
 nnoremap ; :
 
+" Remap F1 to escape.  This is especially useful on Kinesis keyboards.
+map <F1> <Esc>
+imap <F1> <Esc>
+
 " Set Ctrl-P as the command to invoke the CtrlP plugin.
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
