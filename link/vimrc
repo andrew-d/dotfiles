@@ -58,8 +58,8 @@ set ttyfast
 " Show file in titlebar
 set title
 
-" When the page starts to scroll, keep the cursor 3 lines from top/bottom
-set scrolloff=5
+" When the page starts to scroll, keep the cursor 8 lines from top/bottom
+set scrolloff=8
 
 " Allow the cursor to go to 'invalid' locations. Note: disabled becuase it's irritating.
 " set virtualedit=all
