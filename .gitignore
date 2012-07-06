@@ -14,3 +14,7 @@ test/
 # ========================
 *.swp
 
+# Ignore specific files
+# =====================
+link/vim/.netrwhist
+
