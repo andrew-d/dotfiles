@@ -240,7 +240,7 @@ autocmd FileType ruby set shiftwidth=2
 " TODO: bind leader-leader to save
 " TODO: autoindent - why is it off?
 set autoindent
-#set smartindent
+"set smartindent
 
 " Map <Leader>x to set the execute bit on the current file
 function! SetExecutableBit()
