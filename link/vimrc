@@ -237,6 +237,8 @@ autocmd FileType ruby set tabstop=2
 autocmd FileType ruby set shiftwidth=2
 "autocmd FileType ruby set g:detectindent_preferred_expandtab = 1
 
+autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
+
 " TODO: bind leader-leader to save
 " TODO: autoindent - why is it off?
 set autoindent
