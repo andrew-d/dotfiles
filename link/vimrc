@@ -168,6 +168,9 @@ imap <F1> <Esc>
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
+" Turn off automatic syntax checking.  I run this manually.
+let g:syntastic_mode_map = { 'mode': 'passive' }
+
 " Uncomment to highlight the line with the cursor.  I find this kinda
 " irritating.
 " set cursorline
@@ -236,6 +239,8 @@ autocmd FileType ruby set shiftwidth=2
 
 " TODO: bind leader-leader to save
 " TODO: autoindent - why is it off?
+set autoindent
+#set smartindent
 
 " Map <Leader>x to set the execute bit on the current file
 function! SetExecutableBit()
