@@ -1,7 +1,6 @@
 " =============================================================================
 " GENERAL SETTINGS
 " -----------------------------------------------------------------------------
-
 set nocompatible                        " Disable compatibility with vi
 call pathogen#infect()                  " Initialize pathogen.
 
@@ -11,172 +10,250 @@ filetype on                             " Filetype detection on
 filetype plugin on                      " Enable loading plugin files
 filetype indent on                      " Enable loading indent files
 syntax on                               " Syntax highlighting on
+set synmaxcol=2048                      " Don't syntax highlight super-long lines (for performance)
 
-set nobk nowb noswf             " Disable backup, swapfiles, etc. (we have git)
+set nobk nowb noswf                     " Disable backup, swapfiles, etc. (we have git)
+set modelines=0                         " Disable modelines, for security
+
+set enc=utf-8                           " Set the default encoding to UTF-8
+set mouse=a                             " Enable mouse support.
+set hidden                              " Enable hidden buffers
+
+" Set a long timeout for mappings, but a short timeout for keycodes (so 'Esc'
+" is quickly detected, but you can take a while to type mappings).
+set timeout timeoutlen=3000 ttimeoutlen=100
 
 
 " =============================================================================
-" PRESENTATION
+" PRESENTATION AND DISPLAY
 " -----------------------------------------------------------------------------
+set shortmess=atI                       " Disable the distracting intro screen
+set visualbell                          " Flash cursor instead of bell
+set noerrorbells                        " No error bells
+set showmode                            " Display the current mode in the status bar
+set lazyredraw                          " Don't redraw the screen during macros.
+set ttyfast                             " Improve redrawing for 'newer' computers
+set numberwidth=5                       " Linenumber width is 5
+set scrolloff=8                         " When the page starts to scroll, keep the cursor 8 lines from top/bottom
 
-set shm=atI                     " Disable the distracting intro screen
-set visualbell                  " Flash cursor instead of bell
-set noerrorbells                " No error bells
-set showmode                    " Display the current mode in the status bar
+set list                                " Show tabs as ">"
+set listchars=tab:>.
 
-set number                      " Show line numbers
-set numberwidth=5               " Linenumber width is 5
+" Pressing F2 will toggle and show the paste value
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>                    " F2 should toggle in insert mode too
+
+" Uncomment to highlight the line with the cursor.  I find this kinda irritating.
+"set cursorline
+
+" On newish versions of vim, this sets up line numbering.
+if v:version >= 703
+  set relativenumber                    " Use relative line numbers
+
+  function! NumberToggle()
+    if(&relativenumber == 1)
+      set number
+    else
+      set relativenumber
+    endif
+  endfunc
+
+  " Ctrl-N switches between relative and absolute line numbers
+  nnoremap <C-n> :call NumberToggle()<cr>
+
+  " We use absolute numbers in insert mode
+  autocmd InsertEnter * :set number
+  autocmd InsertLeave * :set relativenumber
+
+  " Switch to absolute numbers when Vim loses focus
+  autocmd FocusLost * :set number
+  autocmd FocusGained * :set relativenumber
+else
+  set number                            " Show line numbers
+endif
 
 
 " =============================================================================
 " STATUSLINE
 " -----------------------------------------------------------------------------
-
-set laststatus=2                " Always display a status line
-
+set laststatus=2                        " Always display a status line
+set title                               " Show file in titlebar
+set ruf=%l:%c ruler                     " Display current column/line in bottom right
+set showcmd                             " Show incomplete command at bottom right.
+set showmode                            " Always show the paste mode in the status line
 
 " =============================================================================
-" TAB SETTINGS
+" TAB AND INDENT SETTINGS
 " -----------------------------------------------------------------------------
-
-set wildmenu                    " Enable command-line tab completion
-set wildmode=longest,list,full  " Set tab-completion order
-
-set wildignore+=*.o,*.obj,*.pyc,*.DS_Store,*.db,.git,*.bak,.svn,*.swp
-
-
-" Don't redraw the screen during macros.
-set lazyredraw
-
-" Don't syntax highlight super-long lines (for performance)
-set synmaxcol=2048
-
-" Improves redrawing for "newer" computers (where "newer" is defined as "not
-" ancient").
-set ttyfast
-
-" Show file in titlebar
-set title
-
-" When the page starts to scroll, keep the cursor 8 lines from top/bottom
-set scrolloff=8
-
-" Allow the cursor to go to 'invalid' locations. Note: disabled becuase it's irritating.
-" set virtualedit=all
-
-" Display current column/line in bottom right
-set ruf=%l:%c ruler
-
-" Show incomplete command at bottom right, please.
-set showcmd
-
-" Allow backspacing over anything
-set bs=2
-
-" Only be case sensitive when search contains uppercase letters.
-set ignorecase smartcase
-
-
-
-
-
-" Allow hidden buffers (REALLY useful as well).
-set hidden
-
-" Enable mouse support.
-set mouse=a
-
-" Enable unicode support (seriously).
-set enc=utf-8
-
-" Highlight search matches!
-set hlsearch
-
-" Search incrementally
-set incsearch
-set wrapscan
-
-" Show tabs as ">"
-set list
-set listchars=tab:>.
-
-" Show matching brackets
-set showmatch
-
-" Tabs are spaces, width 4, and are treated as single chars.
-set smarttab
-set expandtab
-set tabstop=4
-
-" A long timeout for mappings, but a short timeout for keycodes (so 'Esc' is
-" quickly detected, but you can take a while to type mappings).
-set timeout timeoutlen=3000 ttimeoutlen=100
-
-" This must be done before the color scheme is specified.
-highlight ExtraWhitespace ctermbg=red guibg=red
-au ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-au BufEnter * match ExtraWhitespace /\s\+$/
-au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-au InsertLeave * match ExtraWhiteSpace /\s\+$/
-
-" Color scheme
-let g:solarized_termcolors=256
-set background=dark
-colorscheme solarized
+set smarttab                            " Tabs are treated as single characters
+set expandtab                           " Expand tab into spaces
+set tabstop=4                           " Tabs are width 4 by default
+set shiftwidth=4
+set softtabstop=4
+set autoindent                          " Copy indentation from previous line
+"set smartindent                        " Disabled since filetype indent is on
 
 " Turn off tab-replacement for Makefiles
 autocmd FileType make setlocal noexpandtab
 
-" Add json syntax highlighting
-au BufNewFile,BufRead *.json set ft=javascript
+" Ruby-specific settings: tabs are 2 characters
+autocmd FileType ruby set textwidth=79
+autocmd FileType ruby set tabstop=2
+autocmd FileType ruby set shiftwidth=2
+autocmd FileType ruby set softtabstop=2
+"autocmd FileType ruby set g:detectindent_preferred_expandtab = 1
 
-" Command to sudo save file
-cmap w!! w !sudo tee % >/dev/null
 
-" MS Windows-style 'indent/dedent selection'
-vmap <Tab> >
-vmap <S-Tab> <
+" =============================================================================
+" COMMAND SETTINGS
+" -----------------------------------------------------------------------------
+set wildmenu                            " Enable command-line tab completion
+set wildmode=longest,list,full          " Set tab-completion order
 
-" MS Windows-style 'next pane' and 'previous pane' (overridden for Vim 7 later)
-nmap <C-Tab> w
-nmap <CS-Tab> W
+" Types to ignore when autocompleting.
+set wildignore+=*.o,*.obj,*.pyc,*.DS_Store,*.db,.git,*.bak,.svn,*.swp
 
-" Easier moving in windows
+
+" =============================================================================
+" SEARCH AND REPLACE SETTINGS
+" -----------------------------------------------------------------------------
+set ignorecase                          " Ignore case when searching all lower-case ...
+set smartcase                           " ... but be case-sensitive if the search has mixed case
+set hlsearch                            " Highlight search matches!
+set incsearch                           " Search incrementally
+set wrapscan                            " Wrap searches around the beginning/end of the file
+set gdefault                            " Apply substitutions globally by default
+
+" Space will unhighlight search and clear any diplayed message
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR><Space>
+
+
+" =============================================================================
+" NAVIGATION SETTINGS
+" -----------------------------------------------------------------------------
+"set virtualedit=all                    " Allow the cursor to go to 'invalid' locations. Note: disabled becuase it's irritating.
+set backspace=indent,eol,start          " Allow backspacing over anything
+
+" The following mappings make Ctrl+navkey move that direction in windows
 noremap <C-j> <C-W>j
 noremap <C-k> <C-W>k
 noremap <C-l> <C-W>l
 noremap <C-h> <C-W>h
 
-" Space will unhighlight search and clear any diplayed message
-nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR><Space>
 
-" Remap K to 'split line'
+" =============================================================================
+" DISPLAY AND COLOR SETTINGS
+" -----------------------------------------------------------------------------
+set showmatch                           " Show matching brackets
+
+" The following bit sets up a highlight scheme and the associated mappings that
+" highlight trailing whitespace. This must be done before the color scheme is specified.
+highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd BufEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
+
+let g:solarized_termcolors=256          " Fixes solarized colors.
+set background=dark                     " Use a dark background
+colorscheme solarized                   " Use the solarized colorscheme
+
+" Add json syntax highlighting
+autocmd BufNewFile,BufRead *.json set filetype=javascript
+
+" Settings for the python syntax highlighter
+if has("expr")
+    let python_highlight_string_formatting = 1
+    let python_highlight_indent_errors = 1
+    let python_slow_sync = 1
+endif
+
+
+" =============================================================================
+" MAPPINGS AND REMAPPINGS
+" -----------------------------------------------------------------------------
+" Pressing 'K' splits the line at the current cursor pos
 nnoremap K i<CR><Esc>
 
-" Easy file saving
+" Ctrl-s saves the file (like other editors!)
 map <C-s> :w<CR>
 
-" Making it so ; works like : for commands. Saves typing and eliminates :W
-" style typos
+" Map ; to : in normal mode
 nnoremap ; :
 
-" Remap F1 to escape.  This is especially useful on Kinesis keyboards.
+" Remap F1 to escape.  This is especially useful on Kinesis keyboards
 map <F1> <Esc>
+
+" Ditto above for insert mode
 imap <F1> <Esc>
 
-" Set Ctrl-P as the command to invoke the CtrlP plugin.
-let g:ctrlp_map = '<c-p>'
+" Ditto above for visual mode
+vmap <F1> <Esc>
+
+" Tab in visual mode indents the selection
+vmap <Tab> >
+
+" Shift-Tab in visual mode dedents the selection
+vmap <S-Tab> <
+
+" w!! will save the file with sudo
+cmap w!! w !sudo tee % >/dev/null
+
+" MS Windows-style 'next pane' and 'previous pane' (overridden for Vim 7 later)
+"nmap <C-Tab> w
+"nmap <CS-Tab> W
+
+
+" -----------------------------------------------------------------------------
+" LEADER MAPPINGS (subsection)
+" -----------------------------------------------------------------------------
+" Explicitly set the leader.
+let mapleader="\\"
+
+" <leader>W will strip all trailing whitespace in the file
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+" <leader>a calls Ack, since it's shorter!
+" NOTE: the trailing space is IMPORTANT - it means that I don't have to type it
+" after using <leader>a
+nnoremap <leader>a :Ack 
+
+" <leader>w will open a new vertical split window, and switch to it
+nnoremap <leader>w <C-w>v<C-w>l
+
+
+" =============================================================================
+" PLUGIN SETTINGS
+" -----------------------------------------------------------------------------
+let g:ctrlp_map = '<c-p>'               " Set Ctrl-P as the command to invoke the CtrlP plugin.
 let g:ctrlp_cmd = 'CtrlP'
 
-" Turn off automatic syntax checking.  I run this manually.
+" Turn off automatic syntax checking for Syntastic.  I prefer to run this manually.
 let g:syntastic_mode_map = { 'mode': 'passive' }
 
-" Uncomment to highlight the line with the cursor.  I find this kinda
-" irritating.
-" set cursorline
 
-" Functions go after this
-" -----------------------------------------------------------
+" =============================================================================
+" CUSTOM FUNCTIONS
+" -----------------------------------------------------------------------------
+" Map <Leader>x to set the execute bit on the current file
+function! SetExecutableBit()
+    let fname = expand("%:p")
+    checktime
+    execute "au FileChangedShell " . fname . " :echo"
+    silent !chmod a+x %
+    checktime
+    execute "au! FileChangedShell " . fname
+    redraw!
+    echo "chmod +x " . fname
+endfunction
+command! Chmodx call SetExecutableBit()
+map <Leader>x :Chmodx<cr>
+
+" On save, make file executable if has shebang line starting with '/bin/' or '/usr/bin/'
+" NOTE: Depends on SetExecutableBit, above, so don't move this.
+autocmd BufWritePost * if getline(1) =~ "^#!/bin/" | :call SetExecutableBit() | elseif getline(1) =~ "^#!/usr/bin/" | :call SetExecutableBit() | endif
+
+" If we're on Vim 7+, we setup functions to move through windows.
 if v:version >= 700
     " A single key for stepping through all open buffers.
     function NextWindow()
@@ -224,43 +301,10 @@ if v:version >= 700
 
 endif
 
-" Settings for the python syntax highlighter
-if has("expr")
-    let python_highlight_string_formatting = 1
-    let python_highlight_indent_errors = 1
-    let python_slow_sync = 1
-endif
 
-" TODO: Move this somewhere sane
-autocmd FileType ruby set textwidth=79
-autocmd FileType ruby set tabstop=2
-autocmd FileType ruby set shiftwidth=2
-"autocmd FileType ruby set g:detectindent_preferred_expandtab = 1
-
-autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
-
-" TODO: bind leader-leader to save
-" TODO: autoindent - why is it off?
-set autoindent
-"set smartindent
-
-" Map <Leader>x to set the execute bit on the current file
-function! SetExecutableBit()
-    let fname = expand("%:p")
-    checktime
-    execute "au FileChangedShell " . fname . " :echo"
-    silent !chmod a+x %
-    checktime
-    execute "au! FileChangedShell " . fname
-    redraw!
-    echo "chmod +x " . fname
-endfunction
-command! Chmodx call SetExecutableBit()
-map <Leader>x :Chmodx<cr>
-
-" On save, make file executable if has shebang line with '/bin/' or '/usr/bin/'
-autocmd BufWritePost * if getline(1) =~ "^#!/bin/" | :call SetExecutableBit() | elseif getline(1) =~ "^#!/usr/bin/" | :call SetExecutableBit() | endif
-
+" =============================================================================
+" PLATFORM- AND COMPUTER-SPECIFIC STUFF
+" -----------------------------------------------------------------------------
 " Platform-dependent bits
 if has("win32")
     set fileformats=dos,unix,mac
