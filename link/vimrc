@@ -103,6 +103,8 @@ autocmd FileType ruby set shiftwidth=2
 autocmd FileType ruby set softtabstop=2
 "autocmd FileType ruby set g:detectindent_preferred_expandtab = 1
 
+" Set smartindent keywords for Python.
+autocmd BufRead,BufNewFile *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 
 " =============================================================================
 " COMMAND SETTINGS
@@ -154,6 +156,9 @@ autocmd BufEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 
+" Display tabs at the beginning of lines in Python as bad.
+autocmd BufRead,BufNewFile *.py match ExtraWhitespace /^\t\+/
+
 let g:solarized_termcolors=256          " Fixes solarized colors.
 set background=dark                     " Use a dark background
 colorscheme solarized                   " Use the solarized colorscheme
@@ -161,12 +166,8 @@ colorscheme solarized                   " Use the solarized colorscheme
 " Add json syntax highlighting
 autocmd BufNewFile,BufRead *.json set filetype=javascript
 
-" Settings for the python syntax highlighter
-if has("expr")
-    let python_highlight_string_formatting = 1
-    let python_highlight_indent_errors = 1
-    let python_slow_sync = 1
-endif
+" Enable all python syntax highlighting.
+let python_highlight_all=1
 
 
 " =============================================================================
