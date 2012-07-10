@@ -135,6 +135,7 @@ nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR><Space>
 " -----------------------------------------------------------------------------
 "set virtualedit=all                    " Allow the cursor to go to 'invalid' locations. Note: disabled becuase it's irritating.
 set backspace=indent,eol,start          " Allow backspacing over anything
+set switchbuf=useopen,usetab            " Files are opened from buffers, if it exists
 
 " The following mappings make Ctrl+navkey move that direction in windows
 noremap <C-j> <C-W>j
@@ -221,6 +222,9 @@ nnoremap <leader>a :Ack
 
 " <leader>w will open a new vertical split window, and switch to it
 nnoremap <leader>w <C-w>v<C-w>l
+
+" <leader>v will open a new, empty vertical window to the right
+nnoremap <leader>v :rightbelow vnew<CR>
 
 
 " =============================================================================
