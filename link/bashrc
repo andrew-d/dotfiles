@@ -112,7 +112,7 @@ export HISTCONTROL=ignoredups
 shopt -s histappend
 
 # Make some commands not show up in history
-export HISTIGNORE="ls:ls *:pwd;exit:date"
+export HISTIGNORE="ls:[bf]g:pwd:exit:date:clear"
 
 
 # ==================================================
