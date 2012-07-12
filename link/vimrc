@@ -207,7 +207,7 @@ cmap w!! w !sudo tee % >/dev/null
 
 
 " -----------------------------------------------------------------------------
-" LEADER MAPPINGS (subsection)
+" Leader Mappings (subsection)
 " -----------------------------------------------------------------------------
 " Explicitly set the leader.
 let mapleader="\\"
