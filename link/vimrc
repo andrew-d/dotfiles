@@ -177,6 +177,15 @@ let python_highlight_all=1
 " Pressing 'K' splits the line at the current cursor pos
 nnoremap K i<CR><Esc>
 
+" Shift-Enter will insert a line below the current line, without going into
+" insert mode.
+map <S-Enter> o<Esc>
+
+" Ctrl-Shift-Enter does the same as Shift-Enter, except above.
+map <CS-Enter> O<Esc>
+
+" NOTE: the above two lines don't seem to work in a terminal :(
+
 " Ctrl-s saves the file (like other editors!)
 map <C-s> :w<CR>
 
