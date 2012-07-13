@@ -14,3 +14,4 @@
 	stat = status -sb
 	head = log -n1
 	fix = commit --amend -C HEAD
+	cdiff = diff --cached
