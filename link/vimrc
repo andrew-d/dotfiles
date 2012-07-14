@@ -115,6 +115,14 @@ set wildmode=longest,list,full          " Set tab-completion order
 " Types to ignore when autocompleting.
 set wildignore+=*.o,*.obj,*.pyc,*.DS_Store,*.db,.git,*.bak,.svn,*.swp
 
+" Auto-insert longest match, show menu for even 1 item, and show more info in
+" the preview window.
+set completeopt=longest,menuone,preview
+
+" Complete by pulling from, in order: the current file, loaded buffers,
+" unloaded buffers, and the tags file.
+set complete=.,b,u,]
+
 
 " =============================================================================
 " SEARCH AND REPLACE SETTINGS
@@ -176,7 +184,6 @@ if has("autocmd") && exists("+omnifunc")
 endif
 
 
-
 " =============================================================================
 " MAPPINGS AND REMAPPINGS
 " -----------------------------------------------------------------------------
@@ -213,10 +220,17 @@ vmap <Tab> >
 " Shift-Tab in visual mode dedents the selection
 vmap <S-Tab> <
 
-" Map omnicompletion to ctrl-space in insert mode. Note that we remap Ctrl-@
-" to ctrl-space first.
+" Make Enter and space select a highlighted menu item.
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" Make Ctrl-N work as normal, but also select the first menu item
+" automatically.
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+" Map Ctrl-@ to Ctrl-Space, to support some terminals that do this.  This is
+" used in the autocomplete mapping, below.
 imap <C-@> <C-Space>
-inoremap <C-Space> <C-X><C-O>
 
 " w!! will save the file with sudo
 cmap w!! w !sudo tee % >/dev/null
@@ -277,6 +291,24 @@ map <Leader>x :Chmodx<cr>
 " On save, make file executable if has shebang line starting with '/bin/' or '/usr/bin/'
 " NOTE: Depends on SetExecutableBit, above, so don't move this.
 autocmd BufWritePost * if getline(1) =~ "^#!/bin/" | :call SetExecutableBit() | elseif getline(1) =~ "^#!/usr/bin/" | :call SetExecutableBit() | endif
+
+" Tab-complete by first using omnicompletion, then checking the dictionary, and finally using known-word completion.
+function! SuperCleverTab()
+    if strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
+        return "\<Tab>"
+    else
+        if &omnifunc != ''
+            return "\<C-X>\<C-O>"
+        elseif &dictionary != ''
+            return "\<C-K>"
+        else
+            return "\<C-N>"
+        endif
+    endif
+endfunction
+" inoremap <C-Space> <C-R>=SuperCleverTab()<cr>
+inoremap <expr> <C-Space> pumvisible() ? '<C-n>' :
+  \ '<C-r>=SuperCleverTab()<CR><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " If we're on Vim 7+, we setup functions to move through windows.
 if v:version >= 700
