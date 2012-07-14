@@ -170,6 +170,12 @@ autocmd BufNewFile,BufRead *.json set filetype=javascript
 " Enable all python syntax highlighting.
 let python_highlight_all=1
 
+" Enable omnicompletion for all filetypes that don't have an omnifunction.
+if has("autocmd") && exists("+omnifunc")
+    autocmd Filetype * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
+endif
+
+
 
 " =============================================================================
 " MAPPINGS AND REMAPPINGS
@@ -206,6 +212,11 @@ vmap <Tab> >
 
 " Shift-Tab in visual mode dedents the selection
 vmap <S-Tab> <
+
+" Map omnicompletion to ctrl-space in insert mode. Note that we remap Ctrl-@
+" to ctrl-space first.
+imap <C-@> <C-Space>
+inoremap <C-Space> <C-X><C-O>
 
 " w!! will save the file with sudo
 cmap w!! w !sudo tee % >/dev/null
