@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Only run on OS X
+if [[ `uname` != 'Darwin' ]]; then
+    exit 0
+fi
+
+# Check if Homebrew is installed
+which brew > /dev/null
+rc=$?
+
+# Install homebrew if it's not installed
+if [[ $rc != 0 ]]; then
+    /usr/bin/ruby -e "$(/usr/bin/curl -fsSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)"
+fi
+
+# Make sure we’re using the latest Homebrew
+brew update
+
+# Upgrade any already-installed formulae
+brew upgrade
+
+# Allow us to install dupes of pre-installed utilities.
+brew tap homebrew/dupes
+
+# Install GNU core utilities (those that come with OS X are outdated)
+brew install coreutils
+echo "Don’t forget to add $(brew --prefix coreutils)/libexec/gnubin to \$PATH."
+
+# Install wget with IRI support
+brew install wget --enable-iri
+
+# Install more recent versions of some OS X tools
+brew install homebrew/dupes/grep
+brew install homebrew/dupes/vim
+
+# Install other stuff.
+brew install ack
+brew install git
+brew install netcat
+brew install nmap
+brew install tmux
+brew install tree
+

@@ -7,7 +7,7 @@ from subprocess import call, check_output
 # If no email, prompt to add.
 existing_email = check_output(['git', 'config', '--global', '--get', 'user.email'])
 if existing_email.rstrip() == "":
-    email = raw_input("Enter your GitHub email: ")
+    email = raw_input("Enter your email: ")
     call(['git', 'config', '--global', 'user.email', email])
 
 # If no token, prompt to add.
