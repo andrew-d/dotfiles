@@ -133,7 +133,7 @@ elif [[ "$UNAMESTR" == "Linux" ]]; then
 fi
 
 # Deal with computer-specific stuff.
-if [[ -e ~/.bash.local ]]
+if [[ -f ~/.bash.local ]]
 then
   echo "Loading computer-specific settings..."
   source ~/.bash.local
@@ -141,4 +141,7 @@ fi
 
 # Unset all unneeded variables.
 unset UNAMESTR
+
+# If possible, add tab completion for many more commands
+[ -f /etc/bash_completion ] && source /etc/bash_completion
 
