@@ -15,3 +15,31 @@ def clear
 end
 
 alias cl clear
+
+class Object
+  # Return a list of methods defined locally for a particular object.
+  def local_methods(obj = self)
+    (obj.methods - obj.class.superclass.instance_methods).sort
+  end
+end
+
+# The following two changes change .inspect on Array and Hash to display
+# a max of 20 objects, to cut back on ridiculously long output.
+# NOTE: Disabled for now
+# class Array
+#   alias :__orig_inspect :inspect
+
+#   def inspect
+#     (length > 20) ? "[ ... #{length} elements ... ]" : __orig_inspect
+#   end
+# end
+
+# class Hash
+#   alias :__orig_inspect :inspect
+
+#   def inspect
+#     (length > 20) ? "{ ... #{length} keys ... }" : __orig_inspect
+#   end
+# end
+
+

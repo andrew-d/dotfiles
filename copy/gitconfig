@@ -15,3 +15,4 @@
 	head = log -n1
 	fix = commit --amend -C HEAD
 	cdiff = diff --cached
+	bls = "!git for-each-ref --format='%(refname:short)' --sort=-authordate refs/heads/ | while read r; do git log -1 $r --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset %Cred%h%Creset $r %C(bold blue)<%an>%Creset\"; done"
