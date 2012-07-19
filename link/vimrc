@@ -76,7 +76,6 @@ endif
 " =============================================================================
 " STATUSLINE
 " -----------------------------------------------------------------------------
-set laststatus=2                        " Always display a status line
 set title                               " Show file in titlebar
 set ruler                               " Enable the ruler
 set showcmd                             " Show incomplete command at bottom right.
@@ -84,6 +83,21 @@ set showmode                            " Always show the paste mode in the stat
 
 " Set the ruler format.
 set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
+
+" Set up our status line.
+if has('statusline')
+    set laststatus=2
+
+    " Broken down into easily includeable segments
+    set statusline=%<%f\   " Filename
+    set statusline+=%w%h%m%r " Options
+    set statusline+=%{fugitive#statusline()} "  Git Hotness
+    set statusline+=\ [%{&ff}/%Y]            " filetype
+    set statusline+=\ [%{getcwd()}]          " current dir
+    "set statusline+=\ [A=\%03.3b/H=\%02.2B] " ASCII / Hexadecimal value of char
+    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+endif
+
 
 " =============================================================================
 " TAB AND INDENT SETTINGS
@@ -144,7 +158,7 @@ nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR><Space>
 " =============================================================================
 " NAVIGATION SETTINGS
 " -----------------------------------------------------------------------------
-"set virtualedit=all                    " Allow the cursor to go to 'invalid' locations. Note: disabled becuase it's irritating.
+set virtualedit=onemore                 " Allow the cursor to go one cell past the end of the line
 set backspace=indent,eol,start          " Allow backspacing over anything
 set switchbuf=useopen,usetab            " Files are opened from buffers, if it exists
 
@@ -192,6 +206,14 @@ endif
 " -----------------------------------------------------------------------------
 " Pressing 'K' splits the line at the current cursor pos
 nnoremap K i<CR><Esc>
+
+" Make Y yank until end of line, for consistency with C and D.
+nnoremap Y y$
+
+" Map j and k to navigate by rows, rather than lines (i.e. if a line is wrapped,
+" then pressing j will drop to the next row in the same line).
+nnoremap j gj
+nnoremap k gk
 
 " Shift-Enter will insert a line below the current line, without going into
 " insert mode.
