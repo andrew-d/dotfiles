@@ -17,7 +17,7 @@ set modelines=0                         " Disable modelines, for security
 
 set enc=utf-8                           " Set the default encoding to UTF-8
 set mouse=a                             " Enable mouse support.
-set hidden                              " Enable hidden buffers
+" set hidden                              " Enable hidden buffers
 
 " Set a long timeout for mappings, but a short timeout for keycodes (so 'Esc'
 " is quickly detected, but you can take a while to type mappings).
