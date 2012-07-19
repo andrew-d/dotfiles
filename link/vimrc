@@ -78,9 +78,12 @@ endif
 " -----------------------------------------------------------------------------
 set laststatus=2                        " Always display a status line
 set title                               " Show file in titlebar
-set ruf=%l:%c ruler                     " Display current column/line in bottom right
+set ruler                               " Enable the ruler
 set showcmd                             " Show incomplete command at bottom right.
 set showmode                            " Always show the paste mode in the status line
+
+" Set the ruler format.
+set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
 
 " =============================================================================
 " TAB AND INDENT SETTINGS
