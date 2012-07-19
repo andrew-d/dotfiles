@@ -9,10 +9,15 @@
 	ui = auto
 [push]
 	default = tracking
+[core]
+	whitespace = trailing-space,space-before-tab
+[diff]
+	renames = copies
+	mnemonicprefix = true
 [alias]
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	stat = status -sb
 	head = log -n1
 	fix = commit --amend -C HEAD
 	cdiff = diff --cached
-	bls = "!git for-each-ref --format='%(refname:short)' --sort=-authordate refs/heads/ | while read r; do git log -1 $r --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset %Cred%h%Creset $r %C(bold blue)<%an>%Creset\"; done"
+	lsb = "!git for-each-ref --format='%(refname:short)' --sort=-authordate refs/heads/ | while read r; do git log -1 $r --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset %Cred%h%Creset $r %C(bold blue)<%an>%Creset\"; done"
