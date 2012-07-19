@@ -124,6 +124,7 @@ if [[ "$UNAMESTR" == "Darwin" ]]; then
     # Mac OS X-specific stuff
     alias lock="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
     alias ls="ls -alGF"
+    alias tree="tree -C"
 
     if [ -f `brew --prefix`/etc/autojump ]; then
         . `brew --prefix`/etc/autojump
