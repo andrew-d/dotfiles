@@ -4,6 +4,7 @@
 from os import uname, listdir, lstat
 from os.path import expanduser, join, abspath, exists
 from shutil import copy2
+import errno
 
 if uname()[0] == "Darwin":
     # We're on OS X - install fonts to ~/Library/Fonts
@@ -21,10 +22,10 @@ for f in source_files:
         source_path = join(source_dir, f)
         dest_path = join(path, f)
 
-        src_mtime = lstat(source_path).mtime
+        src_mtime = lstat(source_path).st_mtime
         try:
-            dst_mtime = lstat(dest_path).mtime
-        except OSError as exL
+            dst_mtime = lstat(dest_path).st_mtime
+        except OSError as ex:
             if ex.errno == errno.ENOENT:
                 dst_mtime = 0
             else:
