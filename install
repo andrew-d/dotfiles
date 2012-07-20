@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 import errno
-from shutil import copytree, move, rmtree
+from shutil import copytree, move, rmtree, copy2
 from datetime import datetime
 from os.path import *
 from os import *    # Note: os must come after, so walk() is from here.
@@ -103,6 +103,7 @@ def copy_missing(src, dest):
                 if src_mtime > dst_mtime:
                     # Copy it.
                     print "[COPY  ] {0} --> {1}".format(src_file, dst_file)
+                    copy2(src_file, dst_file)
                 else:
                     # Don't copy it.
                     print "[NOCOPY] {0} --> {1} (destination is newer)".format(src_file, dst_file)
@@ -172,3 +173,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
