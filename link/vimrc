@@ -86,8 +86,8 @@ set showmode                            " Always show the paste mode in the stat
 set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
 
 " If vim-powerline is installed set the symbol types.
-let g:Powerline_symbols = 'unicode'
-" let g:Powerline_symbols = 'fancy'
+" let g:Powerline_symbols = 'unicode'
+let g:Powerline_symbols = 'fancy'
 
 " Set up our status line.
 if has('statusline')

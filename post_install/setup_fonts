@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+from os import uname, listdir, lstat
+from os.path import expanduser, join, abspath, exists
+from shutil import copy2
+
+if uname()[0] == "Darwin":
+    # We're on OS X - install fonts to ~/Library/Fonts
+    path = expanduser("~/Library/Fonts")
+else:
+    path = expanduser("~/.fonts")
+
+source_dir = abspath(join('.', 'fonts'))
+
+print "[SCRIPT] Installing fonts from {0} to {1}".format(source_dir, path)
+
+source_files = listdir(source_dir)
+for f in source_files:
+    if not f.startswith('.'):
+        source_path = join(source_dir, f)
+        dest_path = join(path, f)
+
+        src_mtime = lstat(source_path).mtime
+        try:
+            dst_mtime = lstat(dest_path).mtime
+        except OSError as exL
+            if ex.errno == errno.ENOENT:
+                dst_mtime = 0
+            else:
+                raise
+
+        if src_mtime > dst_mtime:
+            print "[COPY  ] {0} --> {1}...".format(source_path, dest_path)
+            copy2(source_path, dest_path)
+        else:
+            print "[NOCOPY] {0} is up-to-date".format(dest_path)
+
