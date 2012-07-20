@@ -170,10 +170,15 @@ set backspace=indent,eol,start          " Allow backspacing over anything
 set switchbuf=useopen,usetab            " Files are opened from buffers, if it exists
 
 " The following mappings make Ctrl+navkey move that direction in windows
+" We set them in both normal and insert mode, for ease of use
 noremap <C-j> <C-W>j
 noremap <C-k> <C-W>k
 noremap <C-l> <C-W>l
 noremap <C-h> <C-W>h
+inoremap <C-j> <ESC><C-W>j
+inoremap <C-k> <ESC><C-W>k
+inoremap <C-l> <ESC><C-W>l
+inoremap <C-h> <ESC><C-W>h
 
 
 " =============================================================================
