@@ -27,6 +27,7 @@ set timeout timeoutlen=3000 ttimeoutlen=100
 " =============================================================================
 " PRESENTATION AND DISPLAY
 " -----------------------------------------------------------------------------
+set t_Co=256                            " Tell Vim that we're on a 256-color terminal
 set shortmess=atI                       " Disable the distracting intro screen
 set visualbell                          " Flash cursor instead of bell
 set noerrorbells                        " No error bells
@@ -83,6 +84,10 @@ set showmode                            " Always show the paste mode in the stat
 
 " Set the ruler format.
 set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
+
+" If vim-powerline is installed set the symbol types.
+let g:Powerline_symbols = 'unicode'
+" let g:Powerline_symbols = 'fancy'
 
 " Set up our status line.
 if has('statusline')
