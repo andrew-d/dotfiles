@@ -1,6 +1,9 @@
 # Enable vi-style keybindings
 set -o vi
 
+# Make PythonBrew work
+[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
+
 # Make virtualenvwrapper work
 if [[ -e /usr/local/bin/virtualenvwrapper.sh ]]; then
   export WORKON_HOME=~/venvs
