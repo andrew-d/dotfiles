@@ -197,7 +197,7 @@ autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 " Display tabs at the beginning of lines in Python as bad.
 autocmd BufRead,BufNewFile *.py match ExtraWhitespace /^\t\+/
 
-let g:solarized_termcolors=256          " Fixes solarized colors.
+" let g:solarized_termcolors=256          " Fixes solarized colors.
 set background=dark                     " Use a dark background
 colorscheme solarized                   " Use the solarized colorscheme
 
@@ -410,4 +410,3 @@ endif
 if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
-
