@@ -60,7 +60,7 @@ if v:version >= 703
   endfunc
 
   " Ctrl-N switches between relative and absolute line numbers
-  nnoremap <C-n> :call NumberToggle()<cr>
+  nnoremap <F7> :call NumberToggle()<cr>
 
   " We use absolute numbers in insert mode
   autocmd InsertEnter * :set number
@@ -244,11 +244,7 @@ nnoremap ; :
 
 " Remap F1 to escape.  This is especially useful on Kinesis keyboards
 map <F1> <Esc>
-
-" Ditto above for insert mode
 imap <F1> <Esc>
-
-" Ditto above for visual mode
 vmap <F1> <Esc>
 
 " Tab in visual mode indents the selection
@@ -259,7 +255,7 @@ vmap <S-Tab> <
 
 " Make Enter and space select a highlighted menu item.
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <Space> pumvisible() ? "\<C-y>" : "\<Space>"
+" inoremap <expr> <Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
 " Make Ctrl-N work as normal, but also select the first menu item
 " automatically.
@@ -394,6 +390,15 @@ if v:version >= 700
     nnoremap <C-W>W :call PrevWindow()<cr>
 
 endif
+
+function! SingleQuote(str)
+    return "'" . substitute(copy(a:str), "'", "''", 'g') . "'"
+endfunction
+
+" This is a helpful function that lets us replace built-in commands.
+function! Cabbrev(key, value)
+    execute printf('cabbrev <expr> %s (getcmdtype() == ":" && getcmdpos() <=  %d) ? %s : %s', a:key, 1+len(a:key), SingleQuote(a:value), SingleQuote(a:key))
+endfunction
 
 
 " =============================================================================
