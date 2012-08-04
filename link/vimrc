@@ -147,6 +147,9 @@ set completeopt=longest,menuone,preview
 " unloaded buffers, and the tags file.
 set complete=.,b,u,]
 
+" Set the tags path.
+set tags=tags;/
+
 
 " =============================================================================
 " SEARCH AND REPLACE SETTINGS
@@ -269,6 +272,9 @@ cmap w!! w !sudo tee % >/dev/null
 "nmap <C-Tab> w
 "nmap <CS-Tab> W
 
+" Generate tags on the current directory with F4
+map <F4> :!ctags -R --fields=+iaS --extra=+q .<CR>
+
 
 " -----------------------------------------------------------------------------
 " Leader Mappings (subsection)
@@ -390,6 +396,27 @@ endfunction
 function! Cabbrev(key, value)
     execute printf('cabbrev <expr> %s (getcmdtype() == ":" && getcmdpos() <=  %d) ? %s : %s', a:key, 1+len(a:key), SingleQuote(a:value), SingleQuote(a:key))
 endfunction
+
+" If we have cscope, try and use that.
+if has("cscope")
+  set cscopetagorder=1
+  set cscopetag
+
+  " Try to load databases
+  set nocscopeverbose
+  if filereadable("cscope.out")
+    cs add cscope.out
+  elseif $CSCOPE_DB != ""
+    cs add $CSCOPE_DB
+  endif
+  set cscopeverbose
+else
+  " Use tjump
+  call Cabbrev('tag', 'tjump')
+  nnoremap <C-]> g<C-]>
+  vnoremap <C-]> g<C-]>
+  nnoremap <C-w>] <C-w>g<C-]>
+end
 
 
 " =============================================================================
