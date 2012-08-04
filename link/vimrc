@@ -253,15 +253,10 @@ vmap <Tab> >
 " Shift-Tab in visual mode dedents the selection
 vmap <S-Tab> <
 
-" Make Enter and space select a highlighted menu item.
+" Make Enter and Tab select a highlighted menu item.
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<Tab>"
 " inoremap <expr> <Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-" Make Ctrl-N work as normal, but also select the first menu item
-" automatically.
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
-
 
 " Map Ctrl-@ to Ctrl-Space, to support some terminals that do this.  This is
 " used in the autocomplete mapping, below.
@@ -305,6 +300,18 @@ let g:ctrlp_cmd = 'CtrlP'
 " Turn off automatic syntax checking for Syntastic.  I prefer to run this manually.
 let g:syntastic_mode_map = { 'mode': 'passive' }
 
+" SuperTab plugin settings.  In short: Ctrl-Space is the shortcut, and try
+" omnifunc completion, falling back to standard completion.
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabMappingForward = '<c-space>'
+let g:SuperTabMappingBackward = '<s-c-space>'
+let g:SuperTabLongestHighlight = 1
+let g:SuperTabLongestEnhanced = 1
+autocmd FileType *
+  \ if &omnifunc != '' |
+  \   call SuperTabChain(&omnifunc, "<c-p>") |
+  \   call SuperTabSetDefaultCompletionType("<c-x><c-n>") |
+  \ endif
 
 " =============================================================================
 " CUSTOM FUNCTIONS
@@ -326,20 +333,6 @@ map <Leader>x :Chmodx<cr>
 " On save, make file executable if has shebang line starting with '/bin/' or '/usr/bin/'
 " NOTE: Depends on SetExecutableBit, above, so don't move this.
 autocmd BufWritePost * if getline(1) =~ "^#!/bin/" | :call SetExecutableBit() | elseif getline(1) =~ "^#!/usr/bin/" | :call SetExecutableBit() | endif
-
-" Tab-complete by first using omnicompletion, then checking the dictionary, and finally using known-word completion.
-function! IntelligentComplete()
-    if &omnifunc != ''
-        return "\<C-X>\<C-O>"
-    elseif &dictionary != ''
-        return "\<C-K>"
-    else
-        return "\<C-N>"
-    endif
-endfunction
-" inoremap <C-Space> <C-R>=IntelligentComplete()<cr>
-inoremap <expr> <C-Space> pumvisible() ? '<C-n>' :
-  \ '<C-r>=IntelligentComplete()<CR><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " If we're on Vim 7+, we setup functions to move through windows.
 if v:version >= 700
