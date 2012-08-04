@@ -261,6 +261,8 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " automatically.
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
+
+
 " Map Ctrl-@ to Ctrl-Space, to support some terminals that do this.  This is
 " used in the autocomplete mapping, below.
 imap <C-@> <C-Space>
@@ -326,22 +328,18 @@ map <Leader>x :Chmodx<cr>
 autocmd BufWritePost * if getline(1) =~ "^#!/bin/" | :call SetExecutableBit() | elseif getline(1) =~ "^#!/usr/bin/" | :call SetExecutableBit() | endif
 
 " Tab-complete by first using omnicompletion, then checking the dictionary, and finally using known-word completion.
-function! SuperCleverTab()
-    if strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
-        return "\<Tab>"
+function! IntelligentComplete()
+    if &omnifunc != ''
+        return "\<C-X>\<C-O>"
+    elseif &dictionary != ''
+        return "\<C-K>"
     else
-        if &omnifunc != ''
-            return "\<C-X>\<C-O>"
-        elseif &dictionary != ''
-            return "\<C-K>"
-        else
-            return "\<C-N>"
-        endif
+        return "\<C-N>"
     endif
 endfunction
-" inoremap <C-Space> <C-R>=SuperCleverTab()<cr>
+" inoremap <C-Space> <C-R>=IntelligentComplete()<cr>
 inoremap <expr> <C-Space> pumvisible() ? '<C-n>' :
-  \ '<C-r>=SuperCleverTab()<CR><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+  \ '<C-r>=IntelligentComplete()<CR><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " If we're on Vim 7+, we setup functions to move through windows.
 if v:version >= 700
