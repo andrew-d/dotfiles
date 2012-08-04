@@ -17,4 +17,5 @@ test/
 # Ignore specific files
 # =====================
 link/vim/.netrwhist
+tags
 
