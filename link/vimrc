@@ -138,6 +138,7 @@ set wildmode=longest,list,full          " Set tab-completion order
 
 " Types to ignore when autocompleting.
 set wildignore+=*.o,*.obj,*.pyc,*.DS_Store,*.db,.git,*.bak,.svn,*.swp
+set wildignore+=.tox,*.egg-info
 
 " Auto-insert longest match, show menu for even 1 item, and show more info in
 " the preview window.
