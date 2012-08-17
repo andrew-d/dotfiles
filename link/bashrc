@@ -1,16 +1,6 @@
 # Enable vi-style keybindings
 set -o vi
 
-# Make PythonBrew work
-[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
-
-# Make virtualenvwrapper work
-if [[ -e /usr/local/bin/virtualenvwrapper.sh ]]; then
-  export WORKON_HOME=~/venvs
-  mkdir -p $WORKON_HOME
-  source /usr/local/bin/virtualenvwrapper.sh
-fi
-
 # IP addresses
 alias wanip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias whois="whois -h whois-servers.net"
@@ -148,4 +138,14 @@ unset UNAMESTR
 
 # If possible, add tab completion for many more commands
 [ -f /etc/bash_completion ] && source /etc/bash_completion
+
+# Make Pythonz work
+[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
+
+# Make virtualenvwrapper work
+if [[ -e /usr/local/bin/virtualenvwrapper.sh ]]; then
+  export WORKON_HOME=~/venvs
+  mkdir -p $WORKON_HOME
+  source /usr/local/bin/virtualenvwrapper.sh
+fi
 
