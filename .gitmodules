@@ -7,3 +7,6 @@
 [submodule "link/vim/bundle/ctrlp.vim"]
 	path = link/vim/bundle/ctrlp.vim
 	url = https://github.com/kien/ctrlp.vim.git
+[submodule "link/vim/bundle/supertab"]
+	path = link/vim/bundle/supertab
+	url = git://github.com/ervandew/supertab.git
