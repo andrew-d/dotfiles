@@ -10,3 +10,6 @@
 [submodule "link/vim/bundle/supertab"]
 	path = link/vim/bundle/supertab
 	url = git://github.com/ervandew/supertab.git
+[submodule "link/vim/bundle/syntastic"]
+	path = link/vim/bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
