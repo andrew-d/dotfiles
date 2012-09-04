@@ -13,3 +13,27 @@
 [submodule "link/vim/bundle/syntastic"]
 	path = link/vim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
+[submodule "link/vim/bundle/vim-coffee-script"]
+	path = link/vim/bundle/vim-coffee-script
+	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule "link/vim/bundle/vim-colors-solarized"]
+	path = link/vim/bundle/vim-colors-solarized
+	url = git://github.com/altercation/vim-colors-solarized.git
+[submodule "link/vim/bundle/vim-commentary"]
+	path = link/vim/bundle/vim-commentary
+	url = git://github.com/tpope/vim-commentary.git
+[submodule "link/vim/bundle/vim-markdown"]
+	path = link/vim/bundle/vim-markdown
+	url = git://github.com/tpope/vim-markdown.git
+[submodule "link/vim/bundle/vim-python-pep8-indent"]
+	path = link/vim/bundle/vim-python-pep8-indent
+	url = https://github.com/hynek/vim-python-pep8-indent.git
+[submodule "link/vim/bundle/vim-repeat"]
+	path = link/vim/bundle/vim-repeat
+	url = git://github.com/tpope/vim-repeat.git
+[submodule "link/vim/bundle/vim-ruby"]
+	path = link/vim/bundle/vim-ruby
+	url = git://github.com/vim-ruby/vim-ruby.git
+[submodule "link/vim/bundle/vim-surround"]
+	path = link/vim/bundle/vim-surround
+	url = git://github.com/tpope/vim-surround.git
