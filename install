@@ -124,6 +124,10 @@ def copy_missing(src, dest):
 
 
 def main():
+    # Update submodules.
+    run("git submodule update")
+    run("git submodule foreach git pull")
+
     # Make backup directory.
     mkdir_p(BACKUP_DIR)
 
