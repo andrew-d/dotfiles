@@ -320,6 +320,11 @@ autocmd FileType *
   \   call SuperTabSetDefaultCompletionType("<c-x><c-n>") |
   \ endif
 
+" Make ultisnips use Tab / Shift-Tab for moving around.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
 " =============================================================================
 " CUSTOM FUNCTIONS
 " -----------------------------------------------------------------------------
