@@ -149,3 +149,7 @@ if [[ -e /usr/local/bin/virtualenvwrapper.sh ]]; then
   source /usr/local/bin/virtualenvwrapper.sh
 fi
 
+# Make the .pythonrc.py file start.
+PYTHONSTARTUP=~/.pythonrc.py
+export PYTHONSTARTUP
+
