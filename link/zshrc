@@ -11,6 +11,9 @@ ZSH_THEME="andrew"
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
 
+# Set vi keybindings
+bindkey -v
+
 # Autoload modules.  In order:
 #   colors              Enable colors in ZSH scripts
 #   compinit            Init. completion
@@ -77,6 +80,9 @@ setopt NUMERIC_GLOB_SORT
 
 # Enable '#', '~' and '^' character globbing.
 setopt EXTENDED_GLOB
+
+# Move the cursor to the end of a word after completion.
+setopt ALWAYS_TO_END
 
 # Add home-directory bin path, for scripts that I want in my PATH.
 export PATH=$PATH:~/.bin/
