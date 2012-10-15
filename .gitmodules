@@ -45,4 +45,4 @@
 	url = git://github.com/SirVer/ultisnips.git
 [submodule "link/oh-my-zsh"]
 	path = link/oh-my-zsh
-	url = git://github.com/robbyrussell/oh-my-zsh.git
+	url = git@github.com:andrew-d/oh-my-zsh.git
