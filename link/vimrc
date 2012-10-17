@@ -117,27 +117,12 @@ set softtabstop=4
 set autoindent                          " Copy indentation from previous line
 "set smartindent                        " Disabled since filetype indent is on
 
-" Turn off tab-replacement for Makefiles
-autocmd FileType make setlocal noexpandtab
-
-" Ruby-specific settings: tabs are 2 characters
-autocmd FileType ruby set textwidth=79
-autocmd FileType ruby set tabstop=2
-autocmd FileType ruby set shiftwidth=2
-autocmd FileType ruby set softtabstop=2
-"autocmd FileType ruby set g:detectindent_preferred_expandtab = 1
-
-" HTML-specific settings: tabs are 2 characters
-autocmd FileType html set textwidth=79
-autocmd FileType html set tabstop=2
-autocmd FileType html set shiftwidth=2
-autocmd FileType html set softtabstop=2
-
 " Set smartindent keywords for Python.
 autocmd BufRead,BufNewFile *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 
 " Don't de-indent comments in Python
 autocmd BufRead *.py inoremap # X<c-h>#
+
 
 " =============================================================================
 " COMMAND SETTINGS
