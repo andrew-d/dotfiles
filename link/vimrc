@@ -279,6 +279,16 @@ cmap w!! w !sudo tee % >/dev/null
 " Generate tags on the current directory with F4
 map <F4> :!ctags -R --fields=+iaS --extra=+q .<CR>
 
+" Disable arrow keys
+inoremap  <Up>     <NOP>
+inoremap  <Down>   <NOP>
+inoremap  <Left>   <NOP>
+inoremap  <Right>  <NOP>
+noremap   <Up>     <NOP>
+noremap   <Down>   <NOP>
+noremap   <Left>   <NOP>
+noremap   <Right>  <NOP>
+
 
 " -----------------------------------------------------------------------------
 " Leader Mappings (subsection)
