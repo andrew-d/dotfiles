@@ -144,12 +144,9 @@ fi
 # Make the .pythonrc.py file start.
 export PYTHONSTARTUP=~/.pythonrc.py
 
-# Make virtualenvwrapper work
-if [[ -e /usr/local/bin/virtualenvwrapper.sh ]]; then
-  export WORKON_HOME=~/venvs
-  mkdir -p $WORKON_HOME
-  source /usr/local/bin/virtualenvwrapper.sh
-fi
+# Change virtualenvwrapper's home directory, make sure it exists.
+export WORKON_HOME=~/venvs
+mkdir -p $WORKON_HOME
 
 # =============================================================================
 # ALIASES
