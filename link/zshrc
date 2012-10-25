@@ -85,7 +85,7 @@ setopt EXTENDED_GLOB
 setopt ALWAYS_TO_END
 
 # Add home-directory bin path, for scripts that I want in my PATH.
-export PATH=$PATH:~/.bin/
+export PATH=$PATH:~/.bin
 
 # =============================================================================
 # COLOR VARIABLES
