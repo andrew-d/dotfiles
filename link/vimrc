@@ -306,9 +306,11 @@ nnoremap <leader>v :rightbelow vnew<CR>
 nnoremap <leader>h
     \ :if &colorcolumn > 0 <bar>
     \   set colorcolumn= <bar>
+    \   echo "colorcolumn off" <bar>
     \ else <bar>
     \   set colorcolumn=80 <bar>
     \   highlight ColorColumn ctermbg=red guibg=red <bar>
+    \   echo "colorcolumn on" <bar>
     \ endif<CR>
 
 
