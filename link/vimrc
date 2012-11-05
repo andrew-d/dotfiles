@@ -301,6 +301,16 @@ nnoremap <leader>w <C-w>v<C-w>l
 " <leader>v will open a new, empty vertical window to the right
 nnoremap <leader>v :rightbelow vnew<CR>
 
+" <leader>h will toggle highlighting the 80th column
+" Highlight the colored column in red.
+nnoremap <leader>h
+    \ :if &colorcolumn > 0 <bar>
+    \   set colorcolumn= <bar>
+    \ else <bar>
+    \   set colorcolumn=80 <bar>
+    \   highlight ColorColumn ctermbg=red guibg=red <bar>
+    \ endif<CR>
+
 
 " =============================================================================
 " PLUGIN SETTINGS
