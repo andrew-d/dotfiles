@@ -1,0 +1,15 @@
+--smart-case
+
+--type-set=coffee=.coffee
+--type-set=scss=.scss
+--type-set=less=.less
+--type-set=markdown=.md,.mdown,.markdown,.mkdn,.mkd
+--type-set=restructured=.rst
+--type-set=csv=.csv,.tsv,.txt
+
+--ignore-dir=*.egg
+--ignore-dir=*.egg-info
+--ignore-dir=.tox
+--ignore-dir=build
+--ignore-dir=dist
+
