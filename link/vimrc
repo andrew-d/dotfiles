@@ -311,7 +311,7 @@ nnoremap <leader>h
     \   set colorcolumn=80 <bar>
     \   highlight ColorColumn ctermbg=red guibg=red <bar>
     \   echo "colorcolumn on" <bar>
-    \ endif<CR>
+    \ endif<CR><CR>
 
 
 " =============================================================================
