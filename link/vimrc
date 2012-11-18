@@ -238,7 +238,8 @@ map <CS-Enter> O<Esc>
 map <C-s> :w<CR>
 
 " Map ; to : in normal mode
-nnoremap ; :
+" NOTE: Commented out for testing
+" nnoremap ; :
 
 " Remap F1 to escape.  This is especially useful on Kinesis keyboards
 map <F1> <Esc>
