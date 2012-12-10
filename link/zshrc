@@ -179,11 +179,15 @@ if [[ `uname` == "Darwin" ]]; then
     [[ -e /Applications/Postgres.app/Contents/MacOS/bin ]] && export PATH=$PATH:/Applications/Postgres.app/Contents/MacOS/bin
 
     # Append path for new Pythons
-    export PATH=$PATH:/usr/local/share/python
-    export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+    export PATH=/usr/local/share/python:$PATH
 
     # Set node_modules path.
     export NODE_PATH=/usr/local/lib/node_modules
+
+    # Append our npm directory to our path.
+    if [[ -e /usr/local/share/npm/bin ]]; then
+        export PATH=$PATH:/usr/local/share/npm/bin
+    fi
 fi
 
 # =============================================================================
