@@ -43,3 +43,6 @@
 [submodule "link/oh-my-zsh"]
 	path = link/oh-my-zsh
 	url = git@github.com:andrew-d/oh-my-zsh.git
+[submodule "link/vim/bundle/ultisnips"]
+	path = link/vim/bundle/ultisnips
+	url = git://github.com/SirVer/ultisnips.git
