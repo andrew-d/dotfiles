@@ -342,6 +342,13 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
+" Use 'Ag' with our Ack plugin.
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" Change keyboard shortcut for YankRing, and add mapping.
+let g:yankring_replace_n_pkey = '<C-Y>'
+nnoremap <silent> <leader>y :YRShow<CR>
+
 " =============================================================================
 " CUSTOM FUNCTIONS
 " -----------------------------------------------------------------------------
