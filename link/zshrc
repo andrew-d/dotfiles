@@ -197,6 +197,9 @@ fi
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
+# Get git completion working.
+zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
+
 # Select plugins to load.
 plugins=(autojump brew fabric gem git npm osx pip virtualenvwrapper)
 source $ZSH/oh-my-zsh.sh
