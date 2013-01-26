@@ -204,3 +204,6 @@ zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
 plugins=(autojump brew fabric gem git npm osx pip virtualenvwrapper)
 source $ZSH/oh-my-zsh.sh
 
+# Stop correcting anything that starts with a '.' or '_'
+CORRECT_IGNORE = '[._]*'
+
