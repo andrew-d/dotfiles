@@ -455,6 +455,7 @@ end
 " Platform-dependent bits
 if has("win32")
     set fileformats=dos,unix,mac
+    set guifont=Inconsolata_for_Powerline:h11:cANSI
 elseif has("unix")
     set fileformats=unix,dos,mac
 endif
