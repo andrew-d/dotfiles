@@ -210,6 +210,12 @@ if has("autocmd") && exists("+omnifunc")
     autocmd Filetype * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
 endif
 
+" Fancy Unicode characters for long lines.
+set listchars=precedes:◂,extends:▸
+
+" Use a Unicode character for wrapped lines.
+set showbreak=↪\ 
+
 
 " =============================================================================
 " MAPPINGS AND REMAPPINGS
@@ -447,6 +453,15 @@ else
   vnoremap <C-]> g<C-]>
   nnoremap <C-w>] <C-w>g<C-]>
 end
+
+" Instantly leave insert mode when pressing <Esc>
+set ttimeoutlen=10
+augroup FastEscape
+    autocmd!
+
+    au InsertEnter * set timeoutlen=0
+    au InsertLeave * set timeoutlen=3000
+augroup END
 
 
 " =============================================================================
