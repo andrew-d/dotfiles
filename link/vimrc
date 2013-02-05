@@ -22,6 +22,15 @@ set mouse=a                             " Enable mouse support.
 " Set a long timeout for mappings, but a short timeout for keycodes (so 'Esc'
 " is quickly detected, but you can take a while to type mappings).
 set timeout timeoutlen=3000 ttimeoutlen=100
+"
+" Instantly leave insert mode when pressing <Esc>
+augroup FastEscape
+    autocmd!
+
+    au InsertEnter * set timeoutlen=0
+    au InsertLeave * set timeoutlen=3000
+augroup END
+
 
 
 " =============================================================================
@@ -159,6 +168,21 @@ set gdefault                            " Apply substitutions globally by defaul
 " Space will unhighlight search and clear any diplayed message
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR><Space>
 
+" Automatically prepend '\v' to all regexes to make them 'very magic'
+function! VerymagicSearchCommand()
+    " Checks if we already specified that we're using very magic regexps
+    " in the search command
+    if match(getcmdline(), '\\v') == -1
+        return 's/\v'
+    endif
+
+    return 's/'
+endfunction
+nnoremap / /\v
+vnoremap / /\v
+cnoremap s/ <C-R>=VerymagicSearchCommand()<CR>
+
+
 
 " =============================================================================
 " NAVIGATION SETTINGS
@@ -282,10 +306,10 @@ inoremap  <Up>     <NOP>
 inoremap  <Down>   <NOP>
 inoremap  <Left>   <NOP>
 inoremap  <Right>  <NOP>
-" noremap   <Up>     <NOP>
-" noremap   <Down>   <NOP>
-" noremap   <Left>   <NOP>
-" noremap   <Right>  <NOP>
+noremap   <Up>     <NOP>
+noremap   <Down>   <NOP>
+noremap   <Left>   <NOP>
+noremap   <Right>  <NOP>
 
 
 " -----------------------------------------------------------------------------
@@ -453,15 +477,6 @@ else
   vnoremap <C-]> g<C-]>
   nnoremap <C-w>] <C-w>g<C-]>
 end
-
-" Instantly leave insert mode when pressing <Esc>
-set ttimeoutlen=10
-augroup FastEscape
-    autocmd!
-
-    au InsertEnter * set timeoutlen=0
-    au InsertLeave * set timeoutlen=3000
-augroup END
 
 
 " =============================================================================
