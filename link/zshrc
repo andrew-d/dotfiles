@@ -207,3 +207,9 @@ source $ZSH/oh-my-zsh.sh
 # Stop correcting anything that starts with a '.' or '_'
 export CORRECT_IGNORE='[._]*'
 
+# Setup rbenv.  NOTE: This must go at the end.
+if [[ `uname` == "Darwin" ]]; then export RBENV_ROOT=/usr/local/opt/rbenv; fi
+if which rbenv > /dev/null; then
+    eval "$(rbenv init -)";
+fi
+
