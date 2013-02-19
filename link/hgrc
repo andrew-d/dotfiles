@@ -1,3 +1,7 @@
 # Include our authentication file.
 %include .hgauth
 
+[ui]
+username = Andrew Dunham <andrew@du.nham.ca>
+ssh = ssh -C
+
