@@ -49,3 +49,6 @@
 [submodule "link/vim/bundle/YankRing.vim"]
 	path = link/vim/bundle/YankRing.vim
 	url = git://github.com/vim-scripts/YankRing.vim.git
+[submodule "link/vim/bundle/vim-css-color"]
+	path = link/vim/bundle/vim-css-color
+	url = git://github.com/ap/vim-css-color.git
