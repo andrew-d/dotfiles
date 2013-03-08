@@ -344,6 +344,10 @@ nnoremap <leader>h
     \   echo "colorcolumn on" <bar>
     \ endif<CR><CR>
 
+" <leader>d is a helper to download files to the current buffer
+" NOTE: trailing whitespace is important
+nnoremap <leader>d :r ! curl -sL 
+
 
 " =============================================================================
 " PLUGIN SETTINGS
