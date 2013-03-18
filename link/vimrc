@@ -21,7 +21,7 @@ set mouse=a                             " Enable mouse support.
 
 " Set a long timeout for mappings, but a short timeout for keycodes (so 'Esc'
 " is quickly detected, but you can take a while to type mappings).
-set timeout timeoutlen=3000 ttimeoutlen=100
+set timeout timeoutlen=3000 ttimeoutlen=10
 "
 " Instantly leave insert mode when pressing <Esc>
 augroup FastEscape
@@ -30,7 +30,6 @@ augroup FastEscape
     au InsertEnter * set timeoutlen=0
     au InsertLeave * set timeoutlen=3000
 augroup END
-
 
 
 " =============================================================================
@@ -81,6 +80,9 @@ if v:version >= 703
 else
   set number                            " Show line numbers
 endif
+
+" Also match <> pair (for HTML)
+set matchpairs+=<:>
 
 
 " =============================================================================
@@ -182,7 +184,14 @@ nnoremap / /\v
 vnoremap / /\v
 cnoremap s/ <C-R>=VerymagicSearchCommand()<CR>
 
+" Don't update default register when deleting single characters
+noremap x "_x
 
+" Don't update default register when pasting in visual mode
+noremap p "_c<Esc>P
+
+" Anonymous register uses system clipboard
+set clipboard=unnamedplus
 
 " =============================================================================
 " NAVIGATION SETTINGS
@@ -382,6 +391,9 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " Change keyboard shortcut for YankRing, and add mapping.
 let g:yankring_replace_n_pkey = '<C-Y>'
 nnoremap <silent> <leader>y :YRShow<CR>
+
+" Add mapping for Gundo
+nnoremap <F5> :GundoToggle<CR>
 
 " =============================================================================
 " CUSTOM FUNCTIONS
