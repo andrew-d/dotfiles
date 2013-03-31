@@ -191,7 +191,8 @@ noremap x "_x
 noremap p "_c<Esc>P
 
 " Anonymous register uses system clipboard
-set clipboard=unnamedplus
+" NOTE: turned off since it's irritating
+"set clipboard=unnamedplus
 
 " =============================================================================
 " NAVIGATION SETTINGS

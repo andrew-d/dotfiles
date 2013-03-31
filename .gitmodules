@@ -58,3 +58,6 @@
 [submodule "link/vim/bundle/gundo.vim"]
 	path = link/vim/bundle/gundo.vim
 	url = http://github.com/sjl/gundo.vim.git
+[submodule "link/vim/bundle/vim-characterize"]
+	path = link/vim/bundle/vim-characterize
+	url = https://github.com/tpope/vim-characterize/
