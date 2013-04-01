@@ -364,6 +364,10 @@ nnoremap <leader>d :r ! curl -sL
 " -----------------------------------------------------------------------------
 let g:ctrlp_map = '<c-p>'               " Set Ctrl-P as the command to invoke the CtrlP plugin.
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]node_modules$|(\.(git|hg|svn))$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
 
 " Turn off automatic syntax checking for Syntastic.  I prefer to run this manually.
 let g:syntastic_mode_map = { 'mode': 'passive' }
