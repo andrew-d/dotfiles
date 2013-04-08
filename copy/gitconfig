@@ -2,6 +2,7 @@
 	user = andrew-d
 [user]
 	name = Andrew Dunham
+	email = andrew@du.nham.ca
 [color]
 	diff = auto
 	status = auto
@@ -21,3 +22,7 @@
 	fix = commit --amend -C HEAD
 	cdiff = diff --cached
 	lsb = "!git for-each-ref --format='%(refname:short)' --sort=-authordate refs/heads/ | while read r; do git log -1 $r --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset %Cred%h%Creset $r %C(bold blue)<%an>%Creset\"; done"
+	standup = "!git log --since yesterday --author `git config user.email` --pretty=oneline --abbrev-commit"
+	ignored = ls-files --others --ignored --exclude-standard
+[core]
+	editor = /usr/bin/env vim
