@@ -61,3 +61,6 @@
 [submodule "link/vim/bundle/vim-characterize"]
 	path = link/vim/bundle/vim-characterize
 	url = https://github.com/tpope/vim-characterize/
+[submodule "link/vim/bundle/vim-gitgutter"]
+	path = link/vim/bundle/vim-gitgutter
+	url = git://github.com/airblade/vim-gitgutter.git
