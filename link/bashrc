@@ -111,7 +111,7 @@ export HISTIGNORE="ls:[bf]g:pwd:exit:date:clear"
 # ==================================================
 # Deal with platform-specific stuff.
 
-echo "Loading OS-specific settings..."
+# echo "Loading OS-specific settings..."
 UNAMESTR=`uname`
 if [[ "$UNAMESTR" == "Darwin" ]]; then
     # Mac OS X-specific stuff
@@ -129,7 +129,7 @@ fi
 # Deal with computer-specific stuff.
 if [[ -f ~/.bash.local ]]
 then
-  echo "Loading computer-specific settings..."
+  # echo "Loading computer-specific settings..."
   source ~/.bash.local
 fi
 
