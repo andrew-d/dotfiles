@@ -159,6 +159,9 @@ alias whois="whois -h whois-servers.net"
 alias fs="stat -f '%z bytes'"
 alias df="df -h"
 
+# Tree should ignore some common directories.
+alias tree="tree -I node_modules --prune"
+
 # Helper functions.
 if [[ -e ~/.functions ]]; then
   source ~/.functions
