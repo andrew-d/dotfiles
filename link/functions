@@ -1,17 +1,37 @@
 # Syntax-highlight JSON strings or files
 function json() {
-	if [ -p /dev/stdin ]; then
-		# piping, e.g. `echo '{"foo":42}' | json`
-		python -mjson.tool | pygmentize -l javascript
-	else
-		# e.g. `json '{"foo":42}'`
-		python -mjson.tool <<< "$*" | pygmentize -l javascript
-	fi
+    if [ -p /dev/stdin ]; then
+        # piping, e.g. `echo '{"foo":42}' | json`
+        python -mjson.tool | pygmentize -l javascript
+    else
+        # e.g. `json '{"foo":42}'`
+        python -mjson.tool <<< "$*" | pygmentize -l javascript
+    fi
 }
 
 # Escape UTF-8 characters into their 3-byte format
 function escape() {
-	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
-	echo # newline
+    printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
+    echo # newline
 }
 
+# Tunnel server for sshuttle
+TUNNEL_SERVER=andrew@du.nham.ca
+
+# Tunnel all traffic, including DNS.
+alias tun='sshuttle --dns -vr $TUNNEL_SERVER 0/0'
+
+# Get a list of IP addresses for the given domain(s).
+function dns2ip() {
+    dig +short $* | sed "/[^0-9\.]/d"
+}
+
+# Tunnel specific domain(s) only.
+function tunonly() {
+    sshuttle -vr $TNL_SERVER `dns2ip $*`;
+}
+
+# Tunnel everything except the given domain(s)
+function tunbut() {
+    sshuttle --dns -vr $TNL_SERVER `dns2ip $* | sed "s/^/-x/"` 0/0;
+}
