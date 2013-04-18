@@ -26,3 +26,5 @@
 	ignored = ls-files --others --ignored --exclude-standard
 [core]
 	editor = /usr/bin/env vim
+[credential]
+	helper = cache --timeout=3600
