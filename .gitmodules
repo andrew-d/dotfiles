@@ -67,3 +67,6 @@
 [submodule "link/vim/bundle/vim-obsession"]
 	path = link/vim/bundle/vim-obsession
 	url = git://github.com/tpope/vim-obsession/
+[submodule "link/vim/bundle/vim-golang"]
+	path = link/vim/bundle/vim-golang
+	url = git://github.com/jnwhiteh/vim-golang.git
