@@ -2,6 +2,8 @@
 " GENERAL SETTINGS
 " -----------------------------------------------------------------------------
 set nocompatible                        " Disable compatibility with vi
+" HACK: Disable the fmt.vim with vim-golang.  Used below.
+let b:did_ftplugin_go_fmt = 1
 call pathogen#infect()                  " Initialize pathogen.
 
 set history=1000                        " Command history = lots
@@ -400,6 +402,9 @@ nnoremap <silent> <leader>y :YRShow<CR>
 " Add mapping for Gundo
 nnoremap <F5> :GundoToggle<CR>
 
+" Use 4 spaces for Go code, not tabs.
+let g:gofmt_args = '-tabs=false -tabwidth=4'
+
 " =============================================================================
 " CUSTOM FUNCTIONS
 " -----------------------------------------------------------------------------
@@ -498,6 +503,41 @@ else
   vnoremap <C-]> g<C-]>
   nnoremap <C-w>] <C-w>g<C-]>
 end
+
+" Redefinition of go's fmt.vim.  This is pretty simple - just lets us modify
+" the arguments to pass to gofmt.
+function! s:MyFmt()
+    let view = winsaveview()
+    let l:cmd = 'silent %!gofmt'
+    if exists('g:gofmt_args')
+        let l:cmd = l:cmd . ' ' . g:gofmt_args
+    endif
+    exec l:cmd
+
+    if v:shell_error
+        let errors = []
+        for line in getline(1, line('$'))
+            let tokens = matchlist(line, '^\(.\{-}\):\(\d\+\):\(\d\+\)\s*\(.*\)')
+            if !empty(tokens)
+                call add(errors, {"filename": @%,
+                                 \"lnum":     tokens[2],
+                                 \"col":      tokens[3],
+                                 \"text":     tokens[4]})
+            endif
+        endfor
+        if empty(errors)
+            % | " Couldn't detect gofmt error format, output errors
+        endif
+        undo
+        if !empty(errors)
+            call setloclist(0, errors, 'r')
+        endif
+        echohl Error | echomsg "Gofmt returned error" | echohl None
+    endif
+    call winrestview(view)
+endfunction
+
+command! -buffer Fmt call s:MyFmt()
 
 
 " =============================================================================
