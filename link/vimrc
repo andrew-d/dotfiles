@@ -4,6 +4,7 @@
 set nocompatible                        " Disable compatibility with vi
 call pathogen#infect()                  " Initialize pathogen.
 
+set shell=sh
 set history=1000                        " Command history = lots
 set undolevels=1000                     " Lots and lots of undo
 filetype on                             " Filetype detection on
