@@ -213,6 +213,10 @@ export CORRECT_IGNORE='[._]*'
 # Less helper.
 export LESS='-SRin'
 
+# Set Go path and binary directory.
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
 # Setup rbenv.  NOTE: This must go at the end.
 if [[ `uname` == "Darwin" ]]; then export RBENV_ROOT=/usr/local/opt/rbenv; fi
 if which rbenv > /dev/null; then
