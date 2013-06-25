@@ -217,9 +217,5 @@ export LESS='-SRin'
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
-# Setup rbenv.  NOTE: This must go at the end.
-if [[ `uname` == "Darwin" ]]; then export RBENV_ROOT=/usr/local/opt/rbenv; fi
-if which rbenv > /dev/null; then
-    eval "$(rbenv init -)";
-fi
-
+# Setup chruby.  NOTE: This must go at the end.
+source /usr/local/opt/chruby/share/chruby/chruby.sh
