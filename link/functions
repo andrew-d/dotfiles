@@ -16,10 +16,12 @@ function escape() {
 }
 
 # Tunnel server for sshuttle
-TUNNEL_SERVER=andrew@du.nham.ca
+TUNNEL_SERVER=andrew@du.nham.ca:443
 
 # Tunnel all traffic, including DNS.
-alias tun='sshuttle --dns -vr $TUNNEL_SERVER 0/0'
+alias tunnel="sshuttle --dns --daemon --pidfile=/tmp/sshuttle.pid --remote=$TUNNEL_SERVER 0/0"
+alias tunnelx='[[ -f /tmp/sshuttle.pid ]] && kill $(cat /tmp/sshuttle.pid) && echo "Disconnected."'
+alias tunnels='([[ -f /tmp/sshuttle.pid ]] && ps aux | grep $(cat /tmp/sshuttle.pid) | grep -v grep > /dev/null) && echo "Connected" || echo "Not Connected"'
 
 # Get a list of IP addresses for the given domain(s).
 function dns2ip() {
