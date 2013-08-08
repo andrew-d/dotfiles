@@ -70,3 +70,9 @@
 [submodule "link/vim/bundle/vim-golang"]
 	path = link/vim/bundle/vim-golang
 	url = git@github.com:andrew-d/vim-golang.git
+[submodule "link/vim/bundle/vim-misc"]
+	path = link/vim/bundle/vim-misc
+	url = https://github.com/xolox/vim-misc.git
+[submodule "link/vim/bundle/vim-notes"]
+	path = link/vim/bundle/vim-notes
+	url = https://github.com/xolox/vim-notes.git

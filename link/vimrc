@@ -404,6 +404,9 @@ nnoremap <F5> :GundoToggle<CR>
 " Use 4 spaces for Go code, not tabs.
 let g:gofmt_args = '-tabs=false -tabwidth=4'
 
+" Save Vim notes in Dropbox
+let g:notes_directories = ['~/Dropbox/vim-notes']
+
 " =============================================================================
 " CUSTOM FUNCTIONS
 " -----------------------------------------------------------------------------
