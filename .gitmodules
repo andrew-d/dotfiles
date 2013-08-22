@@ -76,3 +76,6 @@
 [submodule "link/vim/bundle/vim-notes"]
 	path = link/vim/bundle/vim-notes
 	url = https://github.com/xolox/vim-notes.git
+[submodule "link/vim/bundle/hexman.vim"]
+	path = link/vim/bundle/hexman.vim
+	url = https://github.com/vim-scripts/hexman.vim.git
