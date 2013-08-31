@@ -16,14 +16,15 @@
 	renames = copies
 	mnemonicprefix = true
 [alias]
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	stat = status -sb
-	head = log -n1
-	fix = commit --amend -C HEAD
 	cdiff = diff --cached
-	lsb = "!git for-each-ref --format='%(refname:short)' --sort=-authordate refs/heads/ | while read r; do git log -1 $r --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset %Cred%h%Creset $r %C(bold blue)<%an>%Creset\"; done"
-	standup = "!git log --since yesterday --author `git config user.email` --pretty=oneline --abbrev-commit"
+	fix = commit --amend -C HEAD
+	head = log -n1
 	ignored = ls-files --others --ignored --exclude-standard
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	lsb = "!git for-each-ref --format='%(refname:short)' --sort=-authordate refs/heads/ | while read r; do git log -1 $r --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset %Cred%h%Creset $r %C(bold blue)<%an>%Creset\"; done"
+	mirror = "!f() { git pull upstream $1 && git push origin $1; }; f"
+	standup = "!git log --since yesterday --author `git config user.email` --pretty=oneline --abbrev-commit"
+	stat = status -sb
 [core]
 	editor = /usr/bin/env vim
 [credential]
