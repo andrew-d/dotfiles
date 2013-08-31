@@ -79,3 +79,6 @@
 [submodule "link/vim/bundle/hexman.vim"]
 	path = link/vim/bundle/hexman.vim
 	url = https://github.com/vim-scripts/hexman.vim.git
+[submodule "link/vim/bundle/vim-godef"]
+	path = link/vim/bundle/vim-godef
+	url = https://github.com/dgryski/vim-godef
