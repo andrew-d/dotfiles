@@ -1,0 +1,66 @@
+#!/bin/bash
+# Performs a "safe" merge, confirming the commits to be merged, the merge
+# strategy, any conflicts, etc.
+# Useage:
+#     $ git safemerge master
+#     Commits:
+#      * bc911ef Fix bug in widget
+#      * e80f8d1 Clean things up
+#
+#     Changes:
+#      foo.py   |  12 ++--
+#      bar.py   |  35 +++++-----
+#      2 files changed, 47 insertions(+), 47 deletions(-)
+#
+#     Fast-forward: not possible
+#
+#     Continue merging master into prod? (y/n)
+#
+# Installation:
+#     Copy git-safemerge to ~/bin/ or /usr/local/bin/, or wherever you prefer to
+#     keep such things.
+
+C_RED='\033[0;31m'
+C_GREEN='\033[0;32m'
+C_YELLOW='\033[0;33m'
+C_RESET='\033[0m'
+
+
+IFS="`printf "\n\t"`"
+set -eu
+
+if [[ "$#" != "1" || "$1" == "-h" ]]; then
+    echo "usage: git safemerge <commit>"
+    echo
+    echo "Performs a \"safe\" merge, confirming the commits to be merged,"
+    echo "the merge strategy, any conflicts, etc."
+    exit 1
+fi
+
+merge_target="$1"
+
+echo "Commits:"
+git log --color --oneline --graph HEAD.."$merge_target" | sed -e 's/^/ /g'
+
+echo
+echo "Changes:"
+git diff --stat HEAD.."$merge_target"
+
+echo
+if git merge-base --is-ancestor HEAD "$merge_target"; then
+    echo -e "Fast-forward: ${C_GREEN}possible${C_RESET}"
+else
+    echo -e "Fast-forward: ${C_RED}not possible${C_RESET}"
+fi
+
+cur_branch="$(git rev-parse --abbrev-ref HEAD)"
+
+echo
+echo -ne "Continue merging ${C_YELLOW}$merge_target${C_RESET} into ${C_YELLOW}$cur_branch${C_RESET}? (y/n) "
+read do_merge
+do_merge="$(tr [A-Z] [a-z] <<< "$do_merge")"
+if [[ ! ( "$do_merge" == "y" || "$do_merge" == "yes" ) ]]; then
+    exit 1
+fi
+
+git merge --verbose --edit  "$merge_target"
