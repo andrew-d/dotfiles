@@ -1,0 +1,44 @@
+# This is the default .slate file.
+# If no ~/.slate file exists this is the file that will be used.
+
+config defaultToCurrentScreen true
+config windowHintsShowIcons true
+config windowHintsIgnoreHiddenWindows false
+config windowHintsSpread true
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+
+# Window Hints
+bind e:cmd hint ASDFGHJKLQWERTYUIOPCVBN
+
+# Show a 8x3 grid on monitor 1, and a 6x2 on monitor 2
+bind g:cmd grid padding:5 0:8,3 1:6,2
+
+# Abstract position aliases
+alias full move screenOriginX;screenOriginY screenSizeX;screenSizeY
+alias lefthalf move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
+alias righthalf move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+alias topleft corner top-left resize:screenSizeX/2;screenSizeY/2
+alias topright corner top-right resize:screenSizeX/2;screenSizeY/2
+alias bottomleft corner bottom-left resize:screenSizeX/2;screenSizeY/2
+alias bottomright corner bottom-right resize:screenSizeX/2;screenSizeY/2
+
+# Numpad location Bindings
+bind pad1:cmd ${bottomleft}
+bind pad2:cmd push bottom bar-resize:screenSizeY/2
+bind pad3:cmd ${bottomright}
+bind pad4:cmd ${lefthalf}
+bind pad5:cmd ${full}
+bind pad6:cmd ${righthalf}
+bind pad7:cmd ${topleft}
+bind pad8:cmd push top bar-resize:screenSizeY/2
+bind pad9:cmd ${topright}
+
+# Throw Bindings
+bind 1:ctrl;alt         throw 0 resize
+bind 2:ctrl;alt         throw 1 resize
+bind 3:ctrl;alt         throw 2 resize
+bind right:ctrl;alt;cmd throw right resize
+bind left:ctrl;alt;cmd  throw left  resize
+bind up:ctrl;alt;cmd    throw up    resize
+bind down:ctrl;alt;cmd  throw down  resize
