@@ -40,9 +40,6 @@
 [submodule "link/vim/bundle/vim-powerline"]
 	path = link/vim/bundle/vim-powerline
 	url = git://github.com/Lokaltog/vim-powerline.git
-[submodule "link/oh-my-zsh"]
-	path = link/oh-my-zsh
-	url = git@github.com:andrew-d/oh-my-zsh.git
 [submodule "link/vim/bundle/ultisnips"]
 	path = link/vim/bundle/ultisnips
 	url = git://github.com/SirVer/ultisnips.git
@@ -82,3 +79,6 @@
 [submodule "link/vim/bundle/vim-godef"]
 	path = link/vim/bundle/vim-godef
 	url = https://github.com/dgryski/vim-godef
+[submodule "link/zprezto"]
+	path = link/zprezto
+	url = git@github.com:andrew-d/prezto.git
