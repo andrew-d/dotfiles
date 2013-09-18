@@ -322,6 +322,9 @@ noremap   <Down>   <NOP>
 noremap   <Left>   <NOP>
 noremap   <Right>  <NOP>
 
+" Turn off Q for Ex mode
+noremap Q :q
+
 
 " -----------------------------------------------------------------------------
 " Leader Mappings (subsection)
