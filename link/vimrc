@@ -362,6 +362,23 @@ nnoremap <leader>h
 " NOTE: trailing whitespace is important
 nnoremap <leader>d :r ! curl -sL 
 
+" Open CtrlP for tags
+nnoremap <silent> <leader>. :CtrlPTag<CR>
+
+" Map Hexman.vim stuff to something completely impossible, so it won't add
+" its own mappings.
+nnoremap <leader>*nothappeninga <Plug>HexDelete
+nnoremap <leader>*nothappeningb <Plug>HexInsert
+nnoremap <leader>*nothappeningc <Plug>HexGoto
+nnoremap <leader>*nothappeningd <Plug>HexNext
+nnoremap <leader>*nothappeninge <Plug>HexPrev
+nnoremap <leader>*nothappeningf <Plug>HexToggle
+nnoremap <leader>*nothappeningg <Plug>HexStatus
+nnoremap <leader>*nothappeningh <Plug>HexFind
+
+" Remap Hexman.vim's "enter hex mode" to F6
+map <F6> <Plug>HexManager
+
 
 " =============================================================================
 " PLUGIN SETTINGS
