@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+require 'optparse'
+
+executable = ARGV.find_index { |a| not a[/^-/] }
+man = File.dirname(__FILE__) + '/../man/repl.1'
+
+options = executable ? ARGV.shift(executable) : ARGV
+program = ARGV.join(' ')
+settings = {}
+
+# If nothing but options specified, or nothing
+# specified at all, show some help information:
+options << %w[-h] unless executable
+
+OptionParser.new do |o|
+  o.banner += ' command'
+  o.summary_width = 17
+  o.on('-h', '--help', 'Display this message') { puts o; exit }
+  o.on('-s', '--stdin', "Pipe input to command's STDIN") { settings[:stdin] = true }
+  o.on('-d', '--debug', 'Display each command executed') { settings[:debug] = true }
+  o.on('-m', '--man', 'Display the man page') { exec File.exists?(man) ? "man #{man}" : 'man repl' }
+  o.on('-v', '--version', 'Print REPL version') { puts 'REPL 1.0.0'; exit }
+end.parse(options)
+
+name = program.sub('%s', '').gsub(/\W/, '')
+
+completion_dir = File.expand_path(ENV['REPL_COMPLETION_DIR'] || '~/.repl')
+history_dir = File.expand_path(ENV['REPL_HISTORY_DIR'] || '~')
+
+settings[:completion] = "-f #{completion_dir}/#{name}" if File.exists? completion_dir
+settings[:history] = "-H #{history_dir}/.#{name}_history" if File.exists? history_dir
+
+if `which rlwrap 1>&2> /dev/null` && !ENV['__REPL_WRAPPED']
+  ENV['__REPL_WRAPPED'] = '0'
+  rlwrap = ['rlwrap', settings[:completion], settings[:history], $0, options.join(' '), program] * ' '
+  puts rlwrap if settings[:debug]
+  exec rlwrap
+end
+
+puts settings.to_a.map { |n| n * ': ' } * "\n" << "\nprogram: #{program}" if settings[:debug]
+
+prompt = (ENV['REPL_PROMPT'] || '%s>> ') % ARGV.first
+pattern = settings[:stdin] ? "echo \"%s\" | #{program}" : "#{program} %s"
+
+%w[INT TERM].each { |s| trap(s) { abort '' } }
+loop do
+  print prompt
+  command = pattern % [STDIN.gets.chomp, nil]
+  puts "$ #{command}" if settings[:debug]
+  system command
+end
