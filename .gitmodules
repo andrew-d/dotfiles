@@ -82,3 +82,6 @@
 [submodule "link/zprezto"]
 	path = link/zprezto
 	url = git@github.com:andrew-d/prezto.git
+[submodule "link/vim/bundle/tagbar"]
+	path = link/vim/bundle/tagbar
+	url = https://github.com/majutsushi/tagbar.git
