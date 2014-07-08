@@ -46,7 +46,7 @@ set ttyfast                             " Improve redrawing for 'newer' computer
 set numberwidth=5                       " Linenumber width is 5
 set scrolloff=8                         " When the page starts to scroll, keep the cursor 8 lines from top/bottom
 
-set list                                " Show tabs as ">"
+"set list                                " Show tabs as ">"
 set listchars=tab:>.
 
 " Pressing F2 will toggle and show the paste value
@@ -134,9 +134,8 @@ autocmd BufRead,BufNewFile *.py set smartindent cinwords=if,elif,else,for,while,
 " Don't de-indent comments in Python
 autocmd BufRead *.py inoremap # X<c-h>#
 
-" Don't expand tabs in Go
-autocmd BufRead,BufNewFile *.go set nolist
-
+" Don't show special characters in Go.
+autocmd FileType go set nolist noexpandtab
 
 " =============================================================================
 " COMMAND SETTINGS
@@ -232,7 +231,7 @@ autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 " Display tabs at the beginning of lines in Python as bad.
 autocmd BufRead,BufNewFile *.py match ExtraWhitespace /^\t\+/
 
-" let g:solarized_termcolors=256          " Fixes solarized colors.
+let g:solarized_termcolors=256          " Fixes solarized colors.
 set background=dark                     " Use a dark background
 colorscheme solarized                   " Use the solarized colorscheme
 
