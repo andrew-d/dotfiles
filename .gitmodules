@@ -37,9 +37,6 @@
 [submodule "link/vim/bundle/vim-surround"]
 	path = link/vim/bundle/vim-surround
 	url = git://github.com/tpope/vim-surround.git
-[submodule "link/vim/bundle/vim-powerline"]
-	path = link/vim/bundle/vim-powerline
-	url = git://github.com/Lokaltog/vim-powerline.git
 [submodule "link/vim/bundle/ultisnips"]
 	path = link/vim/bundle/ultisnips
 	url = git://github.com/SirVer/ultisnips.git
@@ -88,3 +85,6 @@
 [submodule "link/vim/bundle/vim-auto-save"]
 	path = link/vim/bundle/vim-auto-save
 	url = https://github.com/907th/vim-auto-save
+[submodule "link/vim/bundle/vim-airline"]
+	path = link/vim/bundle/vim-airline
+	url = https://github.com/bling/vim-airline

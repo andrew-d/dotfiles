@@ -97,9 +97,8 @@ set showmode                            " Always show the paste mode in the stat
 " Set the ruler format.
 set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
 
-" If vim-powerline is installed set the symbol types.
-" let g:Powerline_symbols = 'unicode'
-let g:Powerline_symbols = 'fancy'
+" Use fancy Unicode fonts
+let g:airline_powerline_fonts = 1
 
 " Set up our status line.
 if has('statusline')
@@ -134,6 +133,9 @@ autocmd BufRead,BufNewFile *.py set smartindent cinwords=if,elif,else,for,while,
 
 " Don't de-indent comments in Python
 autocmd BufRead *.py inoremap # X<c-h>#
+
+" Don't expand tabs in Go
+autocmd BufRead,BufNewFile *.go set nolist
 
 
 " =============================================================================
@@ -423,7 +425,7 @@ nnoremap <silent> <leader>y :YRShow<CR>
 nnoremap <F5> :GundoToggle<CR>
 
 " Use 4 spaces for Go code, not tabs.
-let g:gofmt_args = '-tabs=false -tabwidth=4'
+"let g:gofmt_args = '-tabs=false -tabwidth=4'
 
 " Save Vim notes in Dropbox
 let g:notes_directories = ['~/Dropbox/vim-notes']

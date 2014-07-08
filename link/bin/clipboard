@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Access your KDE 4 klipper on the command line
+# usage:
+#  ./clipboard
+#    will output current contents of klipper
+#  echo "foobar" | ./clipboard
+#    will put "foobar" into your clipboard/klipper
+
+
+# check for stdin
+if ! test -t 0; then
+  # oh, nice - user input! we set that as current clipboard content
+  qdbus-qt4 org.kde.klipper /klipper setClipboardContents "$(</dev/stdin)" > /dev/null
+  exit
+fi
+
+# if we reach this point no user input was given and we
+# print out the current contents of the clipboard
+qdbus-qt4 org.kde.klipper /klipper getClipboardContents
