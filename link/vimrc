@@ -400,6 +400,13 @@ nnoremap <leader>*nothappeningh <Plug>HexFind
 " Remap Hexman.vim's "enter hex mode" to F6
 map <F6> <Plug>HexManager
 
+" Search for the word under the cursor
+nnoremap <leader>s :Ack <C-r><C-w>
+
+" Get the current file name and line number and copy to the clipboard.
+nnoremap <leader>b :let @* = expand("%") . ", line " . line(".")<cr>
+vnoremap <leader>b :let @* = expand("%") . ", line " . line(".")<cr>
+
 
 " =============================================================================
 " PLUGIN SETTINGS
