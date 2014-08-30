@@ -82,6 +82,9 @@
 [submodule "link/vim/bundle/tagbar"]
 	path = link/vim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
+[submodule "link/vim/bundle/vim-auto-save"]
+	path = link/vim/bundle/vim-auto-save
+	url = https://github.com/907th/vim-auto-save
 [submodule "link/vim/bundle/vim-airline"]
 	path = link/vim/bundle/vim-airline
 	url = https://github.com/bling/vim-airline
