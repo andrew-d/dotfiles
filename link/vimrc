@@ -1,16 +1,62 @@
-" =============================================================================
-" GENERAL SETTINGS
-" -----------------------------------------------------------------------------
+" Required first
 set nocompatible                        " Disable compatibility with vi
-call pathogen#infect()                  " Initialize pathogen.
-
-set shell=sh
-set history=1000                        " Command history = lots
-set undolevels=1000                     " Lots and lots of undo
 filetype on                             " Filetype detection on
 filetype plugin on                      " Enable loading plugin files
 filetype indent on                      " Enable loading indent files
 syntax on                               " Syntax highlighting on
+
+" =============================================================================
+" PLUGINS
+" -----------------------------------------------------------------------------
+
+" Load plugins
+call plug#begin()
+
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+
+" Language-specific plugins
+Plug 'fatih/vim-go'
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'kchmck/vim-coffee-script'
+Plug 'vim-ruby/vim-ruby'
+
+" Commonly-used plugins
+Plug 'airblade/vim-gitgutter'
+Plug 'bling/vim-airline'
+Plug 'kien/ctrlp.vim'
+Plug 'majutsushi/tagbar'
+Plug 'mileszs/ack.vim'
+
+" Helpful, but not common
+Plug 'Lokaltog/vim-easymotion'
+Plug 'SirVer/ultisnips'
+Plug 'ap/vim-css-color'
+Plug 'vim-scripts/hexman.vim'
+
+" Color
+Plug 'altercation/vim-colors-solarized'
+
+call plug#end()
+
+" Old plugins - reactivate as necessary
+" ervandew/supertab
+" scrooloose/syntastic
+" sjl/gundo.vim
+" vim-scripts/YankRing.vim
+" xolox/vim-misc
+" xolox/vim-notes
+
+" =============================================================================
+" GENERAL SETTINGS
+" -----------------------------------------------------------------------------
+set shell=sh
+set history=1000                        " Command history = lots
+set undolevels=1000                     " Lots and lots of undo
 set synmaxcol=2048                      " Don't syntax highlight super-long lines (for performance)
 
 set nobk nowb noswf                     " Disable backup, swapfiles, etc. (we have git)
@@ -18,7 +64,6 @@ set modelines=0                         " Disable modelines, for security
 
 set enc=utf-8                           " Set the default encoding to UTF-8
 set mouse=a                             " Enable mouse support.
-" set hidden                              " Enable hidden buffers
 
 " Set a long timeout for mappings, but a short timeout for keycodes (so 'Esc'
 " is quickly detected, but you can take a while to type mappings).
@@ -418,22 +463,6 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll)$',
   \ }
 
-" Turn off automatic syntax checking for Syntastic.  I prefer to run this manually.
-let g:syntastic_mode_map = { 'mode': 'passive' }
-
-" SuperTab plugin settings.  In short: Ctrl-Space is the shortcut, and try
-" omnifunc completion, falling back to standard completion.
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabMappingForward = '<c-space>'
-let g:SuperTabMappingBackward = '<s-c-space>'
-let g:SuperTabLongestHighlight = 1
-let g:SuperTabLongestEnhanced = 1
-autocmd FileType *
-  \ if &omnifunc != '' |
-  \   call SuperTabChain(&omnifunc, "<c-p>") |
-  \   call SuperTabSetDefaultCompletionType("<c-x><c-n>") |
-  \ endif
-
 " Make ultisnips use Tab / Shift-Tab for moving around.
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -442,19 +471,6 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " Use 'Ag' with our Ack plugin.
 " Also: ignore ctags files
 let g:ackprg = 'ag --nogroup --nocolor --column --ignore tags'
-
-" Change keyboard shortcut for YankRing, and add mapping.
-let g:yankring_replace_n_pkey = '<C-Y>'
-nnoremap <silent> <leader>y :YRShow<CR>
-
-" Add mapping for Gundo
-nnoremap <F5> :GundoToggle<CR>
-
-" Use 4 spaces for Go code, not tabs.
-"let g:gofmt_args = '-tabs=false -tabwidth=4'
-
-" Save Vim notes in Dropbox
-let g:notes_directories = ['~/Dropbox/vim-notes']
 
 " =============================================================================
 " CUSTOM FUNCTIONS
