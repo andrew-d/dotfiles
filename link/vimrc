@@ -485,6 +485,10 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " Also: ignore ctags files
 let g:ackprg = 'ag --nogroup --nocolor --column --ignore tags'
 
+" Disable the 'K' binding for vim-go
+let g:go_doc_keywordprg_enabled = 0
+
+
 " =============================================================================
 " CUSTOM FUNCTIONS
 " -----------------------------------------------------------------------------
