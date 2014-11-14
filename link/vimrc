@@ -18,6 +18,7 @@ Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-abolish'
 
 " Language-specific plugins
 Plug 'elixir-lang/vim-elixir'
