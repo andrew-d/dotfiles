@@ -30,6 +30,7 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'wting/rust.vim'
 
 " Commonly-used plugins
+Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'kien/ctrlp.vim'
