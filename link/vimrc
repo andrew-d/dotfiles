@@ -26,6 +26,8 @@ Plug 'fatih/vim-go'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'kchmck/vim-coffee-script'
 Plug 'ledger/vim-ledger'
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
 Plug 'vim-ruby/vim-ruby'
 Plug 'wting/rust.vim'
 
