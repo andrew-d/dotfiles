@@ -44,6 +44,7 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'SirVer/ultisnips'
 Plug 'ap/vim-css-color'
 Plug 'vim-scripts/hexman.vim'
+Plug 'vim-scripts/vim-auto-save'
 
 " Color
 Plug 'altercation/vim-colors-solarized'
