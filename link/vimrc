@@ -21,6 +21,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 
 " Language-specific plugins
+Plug 'derekwyatt/vim-scala'
 Plug 'elixir-lang/vim-elixir'
 Plug 'fatih/vim-go'
 Plug 'hynek/vim-python-pep8-indent'
@@ -365,6 +366,10 @@ vmap <Tab> >
 
 " Shift-Tab in visual mode dedents the selection
 vmap <S-Tab> <
+
+" Two mappings from vim-unimpaired
+nmap <silent> [q :cprevious<CR>
+nmap <silent> ]q :cnext<CR>
 
 " Make Enter and Tab select a highlighted menu item.
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
