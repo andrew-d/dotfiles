@@ -21,6 +21,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 
 " Language-specific plugins
+Plug 'andrew-d/vim-grep-syntax'
 Plug 'derekwyatt/vim-scala'
 Plug 'elixir-lang/vim-elixir'
 Plug 'fatih/vim-go'
