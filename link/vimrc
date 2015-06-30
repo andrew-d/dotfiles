@@ -50,6 +50,7 @@ Plug 'vim-scripts/vim-auto-save'
 
 " Color
 Plug 'altercation/vim-colors-solarized'
+Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
 
